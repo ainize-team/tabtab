@@ -29,12 +29,6 @@
                 text-decoration: none;
                 transition: ease .2s;
             }
-            /* 
-            #menu li:hover {
-                background: #CE93D8;
-                border-left: 3px solid #9C27B0;
-            } 
-            */
 
             #menu li:focus {
                 background: #CE93D8;
@@ -60,7 +54,8 @@
     <script>
         var idx = 0,       // 탭 번호
             TAB_ON = false, // 탭 활성화
-            select_gpt2 = 'base-word';
+            select_gpt2 = 'base-word',
+            num_samples = 5;
 
         var editor = document.getElementsByClassName("editor")[0],
             menu = document.getElementById("menu"),
@@ -68,33 +63,32 @@
 
         
 
-        const KEY_CODE = {"TAB" : 9, "ESC" : 27, "UP" : 38, "DOWN" : 40, "ENTER" : 13};
+        const KEY_CODE = {"TAB" : 9, "UP" : 38, "DOWN" : 40, "ENTER" : 13};
 
         const gpt2 = {
-                        "base-word" : 'https://main-gpt2-word-jeong-hyun-su.endpoint.azure-staging.ainize.ai/gpt2-word',
-                        "base-generation" : " ",
+                        "base-word" : 'http://main-gpt2-word-jeong-hyun-su.endpoint.ainize.ai/gpt2-word',
+                        "base-generation" : "http://main-gpt2-large-gmlee329.endpoint.ainize.ai/gpt2-generation",
                         "letter-word" : " ",
                      };
-
 
         document.onkeydown = function(){
             const key = event.keyCode;
 
             // 탭을 누를 때, 5개의 추천 단어 활성화
             if(key == KEY_CODE.TAB){
-                let url = gpt2[select_gpt2] + editor.innerText;
+                let url = gpt2[select_gpt2];
                 let formData = new FormData();
 
                 // 주소창 focus를 막기
                 event.preventDefault();
 
-                formData.append("text", editor.innerHTML);
-                formData.
+                formData.append("text", editor.innerText);
+                formData.append("num_samples", num_samples);
 
                 fetch(url,
                     {
                         method: "POST",
-                        body: 
+                        body: formData,
                     }
                 )
                 .then(response => {
@@ -131,7 +125,7 @@
                             menu.style.top = cur_top;
                             menu.style.display = "block";
                         })();
-                    
+
                         TAB_ON = true;
                         idx = 0;
 
@@ -142,14 +136,19 @@
                 });
             }
 
-            // TAB 활성화 && ESC 혹은 ENTER
-            else if(TAB_ON == true && (key == KEY_CODE.ESC || key == KEY_CODE.ENTER)){
+            // TAB 활성화 && ENTER 혹은 (UP, DOWN을 제외한 나머지 키들)
+            else if(TAB_ON == true && (key == KEY_CODE.ENTER || (key != KEY_CODE.UP && key != KEY_CODE.DOWN))){
                 // ENTER 누를 때, 에디터에 해당 글자 대입
                 if(key == KEY_CODE.ENTER){
                     wrap_items = document.getElementsByClassName("wrap-item");
 
                     editor.innerText += wrap_items[idx].innerText;
                 }
+                // 커서 이동 마지막 문자로,
+                setCurrentCursorPosition(editor.innerText.length);
+
+                // 커서 이동 후, 다음 줄 넘어가는 것을 방지
+                event.preventDefault();
 
                 // 탭 비활성화
                 menu.style.display = "none";
@@ -166,6 +165,56 @@
 
                 wrap_items[idx].focus();
             }
-        }
+        };
+
+
+
+        function createRange(node, chars, range) {
+            if (!range) {
+                range = document.createRange()
+                range.selectNode(node);
+                range.setStart(node, 0);
+            }
+
+            if (chars.count === 0) {
+                range.setEnd(node, chars.count);
+            } 
+            else if (node && chars.count > 0) {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    if (node.textContent.length >= chars.count) {
+                        range.setEnd(node, chars.count);
+                        chars.count = 0;
+                    }
+                } 
+                else {
+                    for (var lp = 0; lp < node.childNodes.length; lp++) {
+                        range = createRange(node.childNodes[lp], chars, range);
+
+                        if (chars.count === 0) {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return range;
+        };
+
+        function setCurrentCursorPosition(chars) {
+            if (chars >= 0) {
+                var selection = window.getSelection();
+
+                range = createRange(editor.parentNode, {
+                    count: chars
+                });
+
+                if (range) {
+                    range.collapse(false);
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                }
+            }
+        };
+
     </script>
 </html>
