@@ -1,0 +1,171 @@
+<html>
+    <head>
+        <style>
+            #menu {
+                display: none;
+                position: absolute;
+                width: 200px;
+                margin: 0;
+                padding: 0;
+                background: #FFFFFF;
+                border-radius: 5px;
+                list-style: none;
+                box-shadow:
+                    0 15px 35px rgba(50,50,90,0.1),
+                    0 5px 15px rgba(0,0,0,0.07);
+                overflow: hidden;
+                z-index: 999999;
+            }
+
+            #menu li {
+                border-left: 3px solid transparent;
+                transition: ease .2s;
+            }
+
+            #menu li a {
+                display: block;
+                padding: 10px;
+                color: #000000;
+                text-decoration: none;
+                transition: ease .2s;
+            }
+            /* 
+            #menu li:hover {
+                background: #CE93D8;
+                border-left: 3px solid #9C27B0;
+            } 
+            */
+
+            #menu li:focus {
+                background: #CE93D8;
+                border-left: 3px solid #9C27B0;
+            }
+            #menu li:focus a {
+                color: #FFFFFF;
+            }
+        </style>
+    </head>
+    <body>
+        <div class='editor' contenteditable="true" autocomplete="off" autocorrect="off" autocapiatlise="off" spellcheck="false" style="padding: 5px 5px; border: 1px solid black;">What is your</div>
+
+        <ul id="menu">
+            <li class="wrap-item" tabindex="1"><a href="#" class="item"></a></li>
+            <li class="wrap-item" tabindex="2"><a href="#" class="item"></a></li>
+            <li class="wrap-item" tabindex="3"><a href="#" class="item"></a></li>
+            <li class="wrap-item" tabindex="4"><a href="#" class="item"></a></li>
+            <li class="wrap-item" tabindex="5"><a href="#" class="item"></a></li>
+        </ul>
+          
+    </body>
+    <script>
+        var idx = 0,       // 탭 번호
+            TAB_ON = false, // 탭 활성화
+            select_gpt2 = 'base-word';
+
+        var editor = document.getElementsByClassName("editor")[0],
+            menu = document.getElementById("menu"),
+            items  = document.getElementsByClassName("item");
+
+        
+
+        const KEY_CODE = {"TAB" : 9, "ESC" : 27, "UP" : 38, "DOWN" : 40, "ENTER" : 13};
+
+        const gpt2 = {
+                        "base-word" : 'https://main-gpt2-word-jeong-hyun-su.endpoint.azure-staging.ainize.ai/gpt2-word',
+                        "base-generation" : " ",
+                        "letter-word" : " ",
+                     };
+
+
+        document.onkeydown = function(){
+            const key = event.keyCode;
+
+            // 탭을 누를 때, 5개의 추천 단어 활성화
+            if(key == KEY_CODE.TAB){
+                let url = gpt2[select_gpt2] + editor.innerText;
+                let formData = new FormData();
+
+                // 주소창 focus를 막기
+                event.preventDefault();
+
+                formData.append("text", editor.innerHTML);
+                formData.
+
+                fetch(url,
+                    {
+                        method: "POST",
+                        body: 
+                    }
+                )
+                .then(response => {
+                    if ( response.status == 200 ){
+                        return response;
+                    }
+                    else{
+                        throw Error("gpt2-word error");
+                    }
+                })
+                .then(response => response.json())
+                .then(response => {
+                    menu = document.getElementById("menu");
+                    items = document.getElementsByClassName("item");
+
+                    // Response를 팝업 메뉴의 글씨로 설정
+                    for(let i=0; i<items.length; i++){
+                        items[i].innerHTML = response[i];
+                    }
+                    
+                    if(typeof window.getSelection != "undefined"){
+                        (function PopupShow(){
+                            // 커서의 위치 Get
+                            const selection = window.getSelection().getRangeAt(0);
+                            const boundingClientRect = selection.getBoundingClientRect();
+
+                            const clientRects = selection.getClientRects();
+                            // 커서의 왼쪽, 위를 기준으로 메뉴 팝업 설정
+                            const cur_left = String(clientRects[0].left) + "px";
+                            const cur_top = String(clientRects[0].top + 23) + "px";
+
+                            // Tab을 누를 경우, 팝업 메뉴가 뜸 ( 커서의 위치를 기준으로 )
+                            menu.style.left = cur_left;
+                            menu.style.top = cur_top;
+                            menu.style.display = "block";
+                        })();
+                    
+                        TAB_ON = true;
+                        idx = 0;
+
+                        document.getElementsByClassName("wrap-item")[idx].focus();
+                    }
+                })
+                .catch(e =>{
+                });
+            }
+
+            // TAB 활성화 && ESC 혹은 ENTER
+            else if(TAB_ON == true && (key == KEY_CODE.ESC || key == KEY_CODE.ENTER)){
+                // ENTER 누를 때, 에디터에 해당 글자 대입
+                if(key == KEY_CODE.ENTER){
+                    wrap_items = document.getElementsByClassName("wrap-item");
+
+                    editor.innerText += wrap_items[idx].innerText;
+                }
+
+                // 탭 비활성화
+                menu.style.display = "none";
+                idx = 0;
+                TAB_ON = false;
+            }
+            // TAB 활성화 && UP 혹은 DOWN
+            else if(TAB_ON == true && (key == KEY_CODE.UP || key == KEY_CODE.DOWN)){
+                // 해당 아이템 포커싱
+                wrap_items = document.getElementsByClassName("wrap-item");
+
+                if(key == KEY_CODE.UP && idx > 0) idx--;
+                else if(key == KEY_CODE.DOWN && idx < 4) idx++;
+
+                wrap_items[idx].focus();
+            }
+        }
+    </script>
+</html>
