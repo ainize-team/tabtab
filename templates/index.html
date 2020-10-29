@@ -54,8 +54,9 @@
     <script>
         var idx = 0,       // 탭 번호
             TAB_ON = false, // 탭 활성화
-            select_gpt2 = 'base-word',
-            num_samples = 5;
+            select_gpt2 = 'gpt2-generation',
+            num_samples = 5,
+            length = 5;
 
         var editor = document.getElementsByClassName("editor")[0],
             menu = document.getElementById("menu"),
@@ -65,27 +66,21 @@
 
         const KEY_CODE = {"TAB" : 9, "UP" : 38, "DOWN" : 40, "ENTER" : 13};
 
-        const gpt2 = {
-                        "base-word" : 'http://main-gpt2-word-jeong-hyun-su.endpoint.ainize.ai/gpt2-word',
-                        "base-generation" : "http://main-gpt2-large-gmlee329.endpoint.ainize.ai/gpt2-generation",
-                        "letter-word" : " ",
-                     };
-
         document.onkeydown = function(){
             const key = event.keyCode;
 
             // 탭을 누를 때, 5개의 추천 단어 활성화
             if(key == KEY_CODE.TAB){
-                let url = gpt2[select_gpt2];
                 let formData = new FormData();
 
                 // 주소창 focus를 막기
                 event.preventDefault();
 
-                formData.append("text", editor.innerText);
-                formData.append("num_samples", num_samples);
+                formData.append("context", editor.innerText);
+                formData.append("model", select_gpt2);
+                formData.append("length", length);
 
-                fetch(url,
+                fetch("/gpt2",
                     {
                         method: "POST",
                         body: formData,
