@@ -42,6 +42,15 @@
     <body>
         <div class='editor' contenteditable="true" autocomplete="off" autocorrect="off" autocapiatlise="off" spellcheck="false" style="padding: 5px 5px; border: 1px solid black;">What is your</div>
 
+
+        <select name="concept" id="concept">
+            <option value="gpt2-">Base</option>
+            <option value="gpt2-cover-">Cover-Letter</option>
+        </select>
+        <select name="type" id="type">
+            <option value="word">Short</option>
+            <option value="generation">Long</option>
+        </select>
         <ul id="menu">
             <li class="wrap-item" tabindex="1"><a href="#" class="item"></a></li>
             <li class="wrap-item" tabindex="2"><a href="#" class="item"></a></li>
@@ -53,10 +62,7 @@
     </body>
     <script>
         var idx = 0,       // 탭 번호
-            TAB_ON = false, // 탭 활성화
-            select_gpt2 = 'gpt2-generation',
-            num_samples = 5,
-            length = 5;
+            TAB_ON = false; // 탭 활성화
 
         var editor = document.getElementsByClassName("editor")[0],
             menu = document.getElementById("menu"),
@@ -71,13 +77,19 @@
 
             // 탭을 누를 때, 5개의 추천 단어 활성화
             if(key == KEY_CODE.TAB){
+                const select_concept = document.getElementById("concept");
+                const select_type = document.getElementById("type");
+
+                const concept = select_concept.options[select_concept.selectedIndex].value;
+                const type = select_type.options[select_type.selectedIndex].value;
+
+                const model = concept + type;
+                const length = 5;
+
                 let formData = new FormData();
 
-                // 주소창 focus를 막기
-                event.preventDefault();
-
                 formData.append("context", editor.innerText);
-                formData.append("model", select_gpt2);
+                formData.append("model", model);
                 formData.append("length", length);
 
                 fetch("/gpt2",
@@ -129,6 +141,9 @@
                 })
                 .catch(e =>{
                 });
+
+                // 주소창 focus를 막기
+                event.preventDefault();
             }
 
             // TAB 활성화 && ENTER 혹은 (UP, DOWN을 제외한 나머지 키들)
@@ -161,7 +176,6 @@
                 wrap_items[idx].focus();
             }
         };
-
 
 
         function createRange(node, chars, range) {

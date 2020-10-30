@@ -50,6 +50,7 @@ def run(context, model, length):
 
     response = requests.post(url, data=data)
 
+    print(response.json())
     return response.json()
 
 
