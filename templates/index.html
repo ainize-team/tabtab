@@ -43,13 +43,14 @@
         <div class='editor' contenteditable="true" autocomplete="off" autocorrect="off" autocapiatlise="off" spellcheck="false" style="padding: 5px 5px; border: 1px solid black;">What is your</div>
 
 
-        <select name="concept" id="concept">
-            <option value="gpt2-">Base</option>
-            <option value="gpt2-cover-">Cover-Letter</option>
+        <select name="model" id="model">
+            <option value="gpt2-large">Base</option>
+            <option value="gpt2-cover-letter">Cover-Letter</option>
         </select>
-        <select name="type" id="type">
-            <option value="word">Short</option>
-            <option value="generation">Long</option>
+
+        <select name="length" id="length">
+            <option value="short">Short</option>
+            <option value="long">Long</option>
         </select>
         <ul id="menu">
             <li class="wrap-item" tabindex="1"><a href="#" class="item"></a></li>
@@ -68,8 +69,6 @@
             menu = document.getElementById("menu"),
             items  = document.getElementsByClassName("item");
 
-        
-
         const KEY_CODE = {"TAB" : 9, "UP" : 38, "DOWN" : 40, "ENTER" : 13};
 
         document.onkeydown = function(){
@@ -77,14 +76,12 @@
 
             // 탭을 누를 때, 5개의 추천 단어 활성화
             if(key == KEY_CODE.TAB){
-                const select_concept = document.getElementById("concept");
-                const select_type = document.getElementById("type");
+                const select_model = document.getElementById("model");
+                const select_length = document.getElementById("length");
 
-                const concept = select_concept.options[select_concept.selectedIndex].value;
-                const type = select_type.options[select_type.selectedIndex].value;
+                const model = select_model.options[select_model.selectedIndex].value;
+                const length = select_length.options[select_length.selectedIndex].value;
 
-                const model = concept + type;
-                const length = 5;
 
                 let formData = new FormData();
 
@@ -176,6 +173,7 @@
                 wrap_items[idx].focus();
             }
         };
+
 
 
         function createRange(node, chars, range) {

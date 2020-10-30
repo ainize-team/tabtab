@@ -1,6 +1,6 @@
 from transformers import AutoModelWithLMHead, AutoTokenizer, top_k_top_p_filtering
 import torch
-from flask import Flask, request, Response, render_template
+from flask import Flask, request, Response, render_template, jsonify
 import requests
 from torch.nn import functional as F
 from queue import Queue, Empty
@@ -15,50 +15,16 @@ BATCH_SIZE = 1
 CHECK_INTERVAL = 0.1
 
 models = {
-    "gpt2-word" : "http://main-gpt2-word-jeong-hyun-su.endpoint.ainize.ai/gpt2-word",
-    "gpt2-generation" : "http://main-gpt2-large-gmlee329.endpoint.ainize.ai/gpt2-generation",
-    "gpt2-letter-word" : "",
+    "gpt2-large" : "http://main-gpt2-large-jeong-hyun-su.endpoint.ainize.ai/",
+    "gpt2-cover-letter" : "http://main-gpt2-cover-letter-jeong-hyun-su.endpoint.ainize.ai/",
 }
-
-# Queue 핸들링
-def handle_requests_by_batch():
-    while True:
-        requests_batch = []
-        while not (len(requests_batch) >= BATCH_SIZE):
-            try:
-                requests_batch.append(requests_queue.get(timeout=CHECK_INTERVAL))
-            except Empty:
-                continue
-
-            for requests in requests_batch:
-                requests['output'] = run(requests['input'][0], requests['input'][1], requests['input'][2])
-
-
-# 쓰레드
-threading.Thread(target=handle_requests_by_batch).start()
-
-
-# Running GPT-2
-def run(context, model, length):
-    # API calling
-    url = models[model]
-
-    if 'word' in model:
-        data = {"text": context, "num_samples": 5}
-    else:
-        data = {"text": context, "num_samples": 5, "length": length}
-
-    response = requests.post(url, data=data)
-
-    print(response.json())
-    return response.json()
 
 
 @app.route("/gpt2", methods=['POST'])
 def gpt2():
     # 큐에 쌓여있을 경우,
     if requests_queue.qsize() > BATCH_SIZE:
-        return jsonify({'error': 'TooManyReqeusts'}), 429
+        return jsonify({'error': 'Too Many Requests'}), 429
 
     # 웹페이지로부터 이미지와 스타일 정보를 얻어옴.
     try:
@@ -70,17 +36,29 @@ def gpt2():
         print("Empty Text")
         return Response("fail", status=400)
 
-    # Queue - put data
-    req = {
-        'input': [context, model, length]
-    }
-    requests_queue.put(req)
 
-    # Queue - wait & check
-    while 'output' not in req:
-        time.sleep(CHECK_INTERVAL)
+    url = models[model] + model + "/" + length
 
-    return req['output']
+    if length == 'short':
+        data = {"text": context, "num_samples": 5}
+    elif length == 'long':
+        data = {"text": context, "num_samples": 5, "length": 20}
+
+    count = 0
+    while True:
+        response = requests.post(url, data=data)
+
+        if response.status_code == 200:
+            return response.json()
+
+        # 3초 초과 or 400 status 종료
+        elif response.status_code == 400 or count == 15:
+            return Response("fail", status=400)
+
+        elif response.status_code == 429:
+            count += 1
+            time.sleep(0.2)
+
 
 
 @app.route("/")
