@@ -40,9 +40,6 @@
         </style>
     </head>
     <body>
-        <div class='editor' contenteditable="true" autocomplete="off" autocorrect="off" autocapiatlise="off" spellcheck="false" style="padding: 5px 5px; border: 1px solid black;">What is your</div>
-
-
         <select name="model" id="model">
             <option value="gpt2-large">Base</option>
             <option value="gpt2-cover-letter">Cover-Letter</option>
@@ -52,6 +49,9 @@
             <option value="short">Short</option>
             <option value="long">Long</option>
         </select>
+
+        <div class='editor' contenteditable="true" autocomplete="off" autocorrect="off" autocapiatlise="off" spellcheck="false" style="padding: 5px 5px; border: 1px solid black;">What is your</div>
+
         <ul id="menu">
             <li class="wrap-item" tabindex="1"><a href="#" class="item"></a></li>
             <li class="wrap-item" tabindex="2"><a href="#" class="item"></a></li>
@@ -117,7 +117,6 @@
                         (function PopupShow(){
                             // 커서의 위치 Get
                             const selection = window.getSelection().getRangeAt(0);
-                            const boundingClientRect = selection.getBoundingClientRect();
 
                             const clientRects = selection.getClientRects();
                             // 커서의 왼쪽, 위를 기준으로 메뉴 팝업 설정
@@ -173,8 +172,6 @@
                 wrap_items[idx].focus();
             }
         };
-
-
 
         function createRange(node, chars, range) {
             if (!range) {

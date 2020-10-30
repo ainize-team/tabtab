@@ -1,18 +1,9 @@
-from transformers import AutoModelWithLMHead, AutoTokenizer, top_k_top_p_filtering
-import torch
 from flask import Flask, request, Response, render_template, jsonify
 import requests
-from torch.nn import functional as F
-from queue import Queue, Empty
 import time
-import threading
 
 # Server & Handling Setting
 app = Flask(__name__)
-
-requests_queue = Queue()
-BATCH_SIZE = 1
-CHECK_INTERVAL = 0.1
 
 models = {
     "gpt2-large" : "http://main-gpt2-large-jeong-hyun-su.endpoint.ainize.ai/",
@@ -22,11 +13,6 @@ models = {
 
 @app.route("/gpt2", methods=['POST'])
 def gpt2():
-    # 큐에 쌓여있을 경우,
-    if requests_queue.qsize() > BATCH_SIZE:
-        return jsonify({'error': 'Too Many Requests'}), 429
-
-    # 웹페이지로부터 이미지와 스타일 정보를 얻어옴.
     try:
         context = request.form['context']
         model = request.form['model']
