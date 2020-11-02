@@ -40,15 +40,22 @@
         </style>
     </head>
     <body>
-        <select name="model" id="model">
-            <option value="gpt2-large">Base</option>
+        <select name="model" id="model" onchange="showDescription(this)">
+            <option value="gpt2-large" selected>Base</option>
             <option value="gpt2-cover-letter">Cover-Letter</option>
+            <option value="gpt2-reddit">Reddit</option>
+            <option value="gpt2-story">Story</option>
+            <option value="gpt2-ads">Ads</option>
         </select>
 
         <select name="length" id="length">
             <option value="short">Short</option>
             <option value="long">Long</option>
         </select>
+
+        <div id="description">This is the basic model in GPT-2.<br>
+        EX) Today, scientists confirmed the worst possible outcome: the massive asteroid will collide with Earth. They have called this asteroid one of the most likely near-planet collisions in history.</div>
+        <br>
 
         <div class='editor' contenteditable="true" autocomplete="off" autocorrect="off" autocapiatlise="off" spellcheck="false" style="padding: 5px 5px; border: 1px solid black;">What is your</div>
 
@@ -219,6 +226,35 @@
                 }
             }
         };
+
+        function showDescription(e){
+            const description = document.getElementById("description");
+
+            switch (e.value){
+                case "gpt2-large":
+                    description.innerHTML = "This is the basic model in GPT-2." + "<br><br>" +
+                        "Today, scientists confirmed the worst possible outcome: the massive asteroid will collide with Earth" + "<u style='background-color: yellow'>.</u>" + "<br>" +
+                        "<u style='background-color: yellow'>" + "They have called this asteroid one of the most likely near-planet collisions in history." + "</u>" + "<br>";
+                    break;
+
+                case "gpt2-cover-letter":
+                    description.innerText = "cover letter is good!";
+                    break;
+
+                case "gpt2-reddit":
+                    description.innerText = "reddit is good!";
+                    break;
+
+                case "gpt2-story":
+                    description.innerText = "story is good!";
+                    break;
+
+                case "gpt2-ads":
+                    description.innerText = "ads is good!";
+                    break;
+            }
+
+        }
 
     </script>
 </html>

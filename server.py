@@ -6,8 +6,11 @@ import time
 app = Flask(__name__)
 
 models = {
-    "gpt2-large" : "http://main-gpt2-large-jeong-hyun-su.endpoint.ainize.ai/",
-    "gpt2-cover-letter" : "http://main-gpt2-cover-letter-jeong-hyun-su.endpoint.ainize.ai/",
+    "gpt2-large": "http://main-gpt2-large-jeong-hyun-su.endpoint.ainize.ai/",
+    "gpt2-cover-letter": "http://main-gpt2-cover-letter-jeong-hyun-su.endpoint.ainize.ai/",
+    "gpt2-reddit": "http://master-gpt2-reddit-woomurf.endpoint.ainize.ai/",
+    "gpt2-story": "http://main-gpt2-story-gmlee329.endpoint.ainize.ai/",
+    "gpt2-ads": "http://main-gpt2-ads-psi1104.endpoint.ainize.ai/"
 }
 
 
@@ -22,7 +25,6 @@ def gpt2():
         print("Empty Text")
         return Response("fail", status=400)
 
-
     url = models[model] + model + "/" + length
 
     if length == 'short':
@@ -34,17 +36,19 @@ def gpt2():
     while True:
         response = requests.post(url, data=data)
 
+        print(response.status_code)
         if response.status_code == 200:
             return response.json()
 
         # 3초 초과 or 400 status 종료
-        elif response.status_code == 400 or count == 15:
+        elif response.status_code in [400, 500] or count == 15:
             return Response("fail", status=400)
 
         elif response.status_code == 429:
             count += 1
             time.sleep(0.2)
 
+    return Response("fail", status=400)
 
 
 @app.route("/")
