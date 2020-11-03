@@ -477,6 +477,7 @@
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.5);
 }
 
+
 #menu li {
     border-left: 3px solid transparent;
     transition: ease .2s;
@@ -486,13 +487,14 @@
     display: block;
     padding: 10px;
     color: #000000;
+
     text-decoration: none;
     transition: ease .2s;
 }
 
 #menu li:focus {
-    background: #CE93D8;
-    border-left: 3px solid #9C27B0;
+    background: #808080;
+    border-left: 3px solid #606060;
 }
 #menu li:focus a {
     color: #FFFFFF;

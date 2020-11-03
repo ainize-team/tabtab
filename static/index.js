@@ -101,6 +101,8 @@ document.onkeydown = function(){
     }
     // TAB 활성화 && UP 혹은 DOWN
     else if(TAB_ON == true && (key == KEY_CODE.UP || key == KEY_CODE.DOWN)){
+        event.preventDefault();
+
         // 해당 아이템 포커싱
         wrap_items = document.getElementsByClassName("wrap-item");
 
@@ -109,37 +111,37 @@ document.onkeydown = function(){
 
         wrap_items[idx].focus();
     }
-    };
+};
 
-    function createRange(node, chars, range) {
-        if (!range) {
-            range = document.createRange()
-            range.selectNode(node);
-            range.setStart(node, 0);
+function createRange(node, chars, range) {
+    if (!range) {
+        range = document.createRange()
+        range.selectNode(node);
+        range.setStart(node, 0);
+    }
+
+    if (chars.count === 0) {
+        range.setEnd(node, chars.count);
+    }
+    else if (node && chars.count > 0) {
+        if (node.nodeType === Node.TEXT_NODE) {
+            if (node.textContent.length >= chars.count) {
+                range.setEnd(node, chars.count);
+                chars.count = 0;
+            }
         }
+        else {
+            for (var lp = 0; lp < node.childNodes.length; lp++) {
+                range = createRange(node.childNodes[lp], chars, range);
 
-        if (chars.count === 0) {
-            range.setEnd(node, chars.count);
-        } 
-        else if (node && chars.count > 0) {
-            if (node.nodeType === Node.TEXT_NODE) {
-                if (node.textContent.length >= chars.count) {
-                    range.setEnd(node, chars.count);
-                    chars.count = 0;
-                }
-            } 
-            else {
-                for (var lp = 0; lp < node.childNodes.length; lp++) {
-                    range = createRange(node.childNodes[lp], chars, range);
-
-                    if (chars.count === 0) {
-                        break;
-                    }
+                if (chars.count === 0) {
+                    break;
                 }
             }
         }
+    }
 
-        return range;
+    return range;
 };
 
 function setCurrentCursorPosition(chars) {

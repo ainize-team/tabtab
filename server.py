@@ -44,7 +44,7 @@ def gpt2():
             return response.json()
 
         # 3초 초과 or 400 status 종료
-        elif response.status_code in [400, 500] or count == 15:
+        elif response.status_code not in [429, 200] or count == 15:
             return Response("fail", status=400)
 
         elif response.status_code == 429:
