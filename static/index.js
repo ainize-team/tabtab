@@ -5,77 +5,86 @@ var editor = document.getElementsByClassName("editor")[0],
 menu = document.getElementById("menu"),
 items  = document.getElementsByClassName("item");
 
+var auto_button = document.getElementById("rectangle");
+
 const KEY_CODE = {"TAB" : 9, "UP" : 38, "DOWN" : 40, "ENTER" : 13};
+
+function complete(){
+    const select_model = document.getElementById("model");
+    const model = select_model.options[select_model.selectedIndex].value;
+
+    const select_length = document.getElementsByName("length");
+    let length;
+
+    if(select_length[0].checked == true) length = select_length[0].value;
+    else if(select_length[1].checked == true) length = select_length[1].value;
+
+    let formData = new FormData();
+
+    formData.append("context", editor.innerText);
+    formData.append("model", model);
+    formData.append("length", length);
+
+    fetch("/gpt2",
+        {
+            method: "POST",
+            body: formData,
+        }
+    )
+    .then(response => {
+        if ( response.status == 200 ){
+            return response;
+        }
+        else{
+            throw Error("gpt2-word error");
+        }
+    })
+    .then(response => response.json())
+    .then(response => {
+        menu = document.getElementById("menu");
+        items = document.getElementsByClassName("item");
+
+        // Response를 팝업 메뉴의 글씨로 설정
+        for(let i=0; i<items.length; i++){
+            items[i].innerHTML = response[i];
+        }
+        
+        if(typeof window.getSelection != "undefined"){
+            (function PopupShow(){
+                // 커서의 위치 Get
+                const selection = window.getSelection().getRangeAt(0);
+
+                const clientRects = selection.getClientRects();
+                // 커서의 왼쪽, 위를 기준으로 메뉴 팝업 설정
+                const cur_left = String(clientRects[0].left) + "px";
+                const cur_top = String(clientRects[0].top + 23) + "px";
+
+                // Tab을 누를 경우, 팝업 메뉴가 뜸 ( 커서의 위치를 기준으로 )
+                menu.style.left = cur_left;
+                menu.style.top = cur_top;
+                menu.style.display = "block";
+            })();
+
+            TAB_ON = true;
+            idx = 0;
+
+            document.getElementsByClassName("wrap-item")[idx].focus();
+        }
+    })
+    .catch(e =>{
+    });
+}
+
+auto_button.onclick = function(){
+    complete();
+}
 
 document.onkeydown = function(){
     const key = event.keyCode;
 
     // 탭을 누를 때, 5개의 추천 단어 활성화
     if(key == KEY_CODE.TAB){
-        const select_model = document.getElementById("model");
-        const model = select_model.options[select_model.selectedIndex].value;
-
-        const select_length = document.getElementsByName("length");
-        let length;
-
-        if(select_length[0].checked == true) length = select_length[0].value;
-        else if(select_length[1].checked == true) length = select_length[1].value;
-
-        let formData = new FormData();
-
-        formData.append("context", editor.innerText);
-        formData.append("model", model);
-        formData.append("length", length);
-
-        fetch("/gpt2",
-            {
-                method: "POST",
-                body: formData,
-            }
-        )
-        .then(response => {
-            if ( response.status == 200 ){
-                return response;
-            }
-            else{
-                throw Error("gpt2-word error");
-            }
-        })
-        .then(response => response.json())
-        .then(response => {
-            menu = document.getElementById("menu");
-            items = document.getElementsByClassName("item");
-
-            // Response를 팝업 메뉴의 글씨로 설정
-            for(let i=0; i<items.length; i++){
-                items[i].innerHTML = response[i];
-            }
-            
-            if(typeof window.getSelection != "undefined"){
-                (function PopupShow(){
-                    // 커서의 위치 Get
-                    const selection = window.getSelection().getRangeAt(0);
-
-                    const clientRects = selection.getClientRects();
-                    // 커서의 왼쪽, 위를 기준으로 메뉴 팝업 설정
-                    const cur_left = String(clientRects[0].left) + "px";
-                    const cur_top = String(clientRects[0].top + 23) + "px";
-
-                    // Tab을 누를 경우, 팝업 메뉴가 뜸 ( 커서의 위치를 기준으로 )
-                    menu.style.left = cur_left;
-                    menu.style.top = cur_top;
-                    menu.style.display = "block";
-                })();
-
-                TAB_ON = true;
-                idx = 0;
-
-                document.getElementsByClassName("wrap-item")[idx].focus();
-            }
-        })
-        .catch(e =>{
-        });
-
+        complete();
         // 주소창 focus를 막기
         event.preventDefault();
     }
@@ -165,37 +174,43 @@ function showDescription(e){
 
     switch (e.value){
         case "gpt2-large":
-            description.innerHTML = "This is the basic model in GPT-2." + "<br><br>" +
-                "Today, scientists confirmed the worst possible outcome: the massive asteroid will collide with Earth" + "<u style='background-color: blue'>.</u>" + "<br>" +
-                "<u style='background-color: blue'>" + "They have called this asteroid one of the most likely near-planet collisions in history." + "</u>" + "<br>";
+            description.innerHTML = "This is the basic model in GPT-2." + 
+            "<br><br><a href='https://ainize.ai/Jeong-Hyun-Su/gpt2-large' style='color: #FFFFFF;'>https://ainize.ai/Jeong-Hyun-Su/gpt2-large</a>";
             break;
 
         case "gpt2-cover-letter":
-            description.innerText = "cover letter is good!";
+            description.innerHTML = "generate cover-letter sentence based fine-tuned gpt2 model" + 
+            "<br><br><a href='https://ainize.ai/Jeong-Hyun-Su/gpt2-cover-letter' style='color: #FFFFFF;'>https://ainize.ai/Jeong-Hyun-Su/gpt2-cover-letter</a>";
             break;
 
         case "gpt2-reddit":
-            description.innerText = "GPT2-reddit is trained by reddit data and generate words and sentences like community posts.";
+            description.innerHTML = "GPT2-reddit is trained by reddit data and generate words and sentences like community posts." +
+            "<br><br><a href='https://ainize.ai/woomurf/gpt2-reddit' style='color: #FFFFFF;'>https://ainize.ai/woomurf/gpt2-reddit</a>";
             break;
 
         case "gpt2-story":
-            description.innerText = "This GPT2-story model generates genre story text. When you enter text at the beginning of the story, the model gives you the rest of the story as long as you want.";
+            description.innerHTML = "This GPT2-story model generates genre story text. When you enter text at the beginning of the story, the model gives you the rest of the story as long as you want." +
+            "<br><br><a href='https://ainize.ai/gmlee329/gpt2_story' style='color: #FFFFFF;'>https://ainize.ai/gmlee329/gpt2_story</a>";
             break;
 
         case "gpt2-ads":
-            description.innerText = "ads is good!";
+            description.innerHTML = "GPT-2 model that has been Fine Tuned to generate an advertisement." + 
+            "<br><br><a href='https://ainize.ai/psi1104/gpt2-ads' style='color: #FFFFFF;'>https://ainize.ai/psi1104/gpt2-ads</a>";
             break;
 
         case "gpt2-film":
-            description.innerText = "This GPT2-film model generates film script text. When you enter text for the beginning of the film script, the model gives you the rest of the film script as long as you want."
+            description.innerHTML = "This GPT2-film model generates film script text. When you enter text for the beginning of the film script, the model gives you the rest of the film script as long as you want." +
+            "<br><br><a href='https://ainize.ai/gmlee329/gpt2_film' style='color: #FFFFFF;'>https://ainize.ai/gmlee329/gpt2_film</a>";
             break;
 
         case "gpt2-business":
-            description.innerText = "business style GPT2 model";
+            description.innerHTML = "business style GPT2 model" + 
+            "<br><br><a href='https://ainize.ai/leesangha/gpt2-business' style='color: #FFFFFF;'>https://ainize.ai/leesangha/gpt2-business</a>";
             break;
 
         case "gpt2-trump":
-            description.innerText = "This GPT2-trump model generates Donald trump’s tweets style text. When you enter text for the beginning of the tweets, the model gives you the rest of the tweets as long as you want."
+            description.innerHTML = "This GPT2-trump model generates Donald trump’s tweets style text. When you enter text for the beginning of the tweets, the model gives you the rest of the tweets as long as you want." +
+            "<br><br><a href='https://ainize.ai/gmlee329/gpt2_trump' style='color: #FFFFFF;'>https://ainize.ai/gmlee329/gpt2_trump</a>";
             break;
     }
 
