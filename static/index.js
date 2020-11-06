@@ -49,26 +49,30 @@ function complete(){
             items[i].innerHTML = response[i];
         }
 
-        console.log("??");
-        console.log(window.getSelection);
-
         if(typeof window.getSelection != "undefined"){
             (function PopupShow(){
                 // 커서의 위치 Get
                 const selection = window.getSelection().getRangeAt(0);
 
                 const clientRects = selection.getClientRects();
-                // 커서의 왼쪽, 위를 기준으로 메뉴 팝업 설정
-                const cur_left = String(clientRects[0].left) + "px";
-                const cur_top = String(clientRects[0].top + 23) + "px";
 
-                console.log(cur_left);
-                console.log(cur_top);
+
+                let cur_left;
+                let cur_top;
+
+                if(clientRects[0].left + 200 < screen.width)
+                    cur_left = String(clientRects[0].left) + "px";
+                else
+                    cur_left = String(screen.width - 200 - 3) + "px";
+                
+                cur_top = String(window.pageYOffset + clientRects[0].top + 27) + "px";
+
 
                 // Tab을 누를 경우, 팝업 메뉴가 뜸 ( 커서의 위치를 기준으로 )
                 menu.style.left = cur_left;
                 menu.style.top = cur_top;
                 menu.style.display = "block";
+                menu.style.position = "absolute";
             })();
 
             TAB_ON = true;
@@ -81,7 +85,33 @@ function complete(){
     });
 }
 
+editor.onclick = function(){
+    // 탭 비활성화
+    menu.style.display = "none";
+    idx = 0;
+    TAB_ON = false;
+}
+$(document).on('mouseover', '#menu', function(){
+   if( TAB_ON == true ) {
+
+   }
+});
+$(document).on('click','.item',function(){
+    if( TAB_ON == true ){
+        editor.innerText += this.innerText;
+
+        // 커서 이동 마지막 문자로,
+        setCurrentCursorPosition(editor.innerText.length);
+
+        // 탭 비활성화
+        menu.style.display = "none";
+        idx = 0;
+        TAB_ON = false;
+    }
+});
+
 auto_button.onclick = function(){
+    setCurrentCursorPosition(editor.childNodes[0].length);
     complete();
 }
 
@@ -90,8 +120,7 @@ document.onkeydown = function(){
 
     // 탭을 누를 때, 5개의 추천 단어 활성화
     if(key == KEY_CODE.TAB){
-        console.log("!!!!!!!!!");
-        console.log("????");
+        complete();
         // 주소창 focus를 막기
         event.preventDefault();
     }
