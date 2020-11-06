@@ -223,43 +223,18 @@
     }
 
     .or{
-        margin: 20px 10px;
-
-        color: #FFFFFF;
+        display: none;
     }
 
     .rectangle_tab{
-        position: relative;
-        padding: 5px;
-
-        height: 27px;
-        width: 50px;
-        background: #9190AE;
-        /* Button inner shadow */
-
-        margin-top: 2.5%;
-        box-shadow: inset 0px -3px 0px rgba(0, 0, 0, 0.25);
-        border-radius: 8px;
+        display: none;
     }
     .tab_icon{
-        display: inline;
-        margin-left: 3px;
+        display: none;
     }
 
     .rectangle_tab_text{
-
-        display: inline;
-
-        font-family: Montserrat;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 13px;
-        line-height: 15px;
-
-        /* identical to box height */
-
-
-        color: #FFFFFF;
+        display: none;
     }
     .editor{
         padding: 50px 20px 0 30px; 
@@ -322,6 +297,7 @@
     }
     .title {
         display: flex;
+        position: relative;
     }
     .header_div {
         margin-top: 30px;
@@ -358,7 +334,8 @@
     }
 
     .link{
-        margin-left: 37%;
+        position: absolute;
+        right: 13%;
     }
     .button{
         float: left;
@@ -404,7 +381,7 @@
     .contents{
         display: flex;
 
-        position: absolute;
+        position: relative;
         width: 100%;
         height: 800px;
         left: 7%;
@@ -448,7 +425,6 @@
         cursor: pointer;
         float: left;
 
-
         border: 1px solid rgba(255, 255, 255, 0.4);
         background-color: #808080;
         opacity: 0.2;
@@ -464,9 +440,7 @@
         background-color: #AD87FF;
     }
     .choose_theme{
-        position: absolute;
-        margin-top: 3%;
-        width: 23%;
+        margin-top: 20%;
     }
 
     .choose_theme_text{
@@ -476,7 +450,6 @@
         font-size: 20px;
         line-height: 28px;
         /* identical to box height, or 175% */
-
 
         color: #FFFFFF;
     }
@@ -516,6 +489,8 @@
         font-weight: normal;
         font-size: 15px;
         line-height: 20px;
+
+        width: 400px;
 
         margin-left: 1%;
         margin-top: 5%;
@@ -567,23 +542,22 @@
     .rectangle_tab{
         position: relative;
 
-        height: 10%;
-        width: 17%;
+        height: 30px;
+        width: 60px;
         background: #9190AE;
         /* Button inner shadow */
 
-        margin-top: 3%;
+        margin-top: 5%;
         box-shadow: inset 0px -3px 0px rgba(0, 0, 0, 0.25);
         border-radius: 8px;
     }
     .tab_icon{
-        position: absolute;
-        top: 40%;
-        left: 10%;
+        display: inline;
+        margin-left: 7px;
     }
 
     .rectangle_tab_text{
-
+        display: inline;
         margin-right: 14%;
         text-align: right;
         font-family: Montserrat;
@@ -605,7 +579,6 @@
         width: 56%;
         height: 700px;
 
-        margin-left: 10%;
         margin-top: 3%;
 
         font-family: Montserrat;
