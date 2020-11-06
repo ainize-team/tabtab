@@ -5,7 +5,7 @@ var editor = document.getElementsByClassName("editor")[0],
 menu = document.getElementById("menu"),
 items  = document.getElementsByClassName("item");
 
-var auto_button = document.getElementById("rectangle");
+var auto_button = document.getElementsByClassName("rectangle")[0];
 
 const KEY_CODE = {"TAB" : 9, "UP" : 38, "DOWN" : 40, "ENTER" : 13};
 
@@ -48,7 +48,10 @@ function complete(){
         for(let i=0; i<items.length; i++){
             items[i].innerHTML = response[i];
         }
-        
+
+        console.log("??");
+        console.log(window.getSelection);
+
         if(typeof window.getSelection != "undefined"){
             (function PopupShow(){
                 // 커서의 위치 Get
@@ -58,6 +61,9 @@ function complete(){
                 // 커서의 왼쪽, 위를 기준으로 메뉴 팝업 설정
                 const cur_left = String(clientRects[0].left) + "px";
                 const cur_top = String(clientRects[0].top + 23) + "px";
+
+                console.log(cur_left);
+                console.log(cur_top);
 
                 // Tab을 누를 경우, 팝업 메뉴가 뜸 ( 커서의 위치를 기준으로 )
                 menu.style.left = cur_left;
@@ -84,7 +90,8 @@ document.onkeydown = function(){
 
     // 탭을 누를 때, 5개의 추천 단어 활성화
     if(key == KEY_CODE.TAB){
-        complete();
+        console.log("!!!!!!!!!");
+        console.log("????");
         // 주소창 focus를 막기
         event.preventDefault();
     }
@@ -170,7 +177,7 @@ function setCurrentCursorPosition(chars) {
 };
 
 function showDescription(e){
-    const description = document.getElementById("description");
+    const description = document.getElementsByClassName("description")[0];
 
     switch (e.value){
         case "gpt2-large":
