@@ -265,7 +265,7 @@
         padding: 50px 20px 0 30px; 
         border: 1px solid black;
 
-        width: 92%;
+        width: 94.2%;
         height: 500px;
 
         margin-top: 3%;
@@ -282,12 +282,11 @@
         box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.5);
     }
     .share_icon{
-        margin-left: 35%;
+        margin-left: 41.7%;
         margin-bottom: 50px;
     }
     .share_link{
-        margin-left: auto;
-        margin-right: auto;
+        margin-left: 23%;
     }
     .share_text {      
         text-align: center;
