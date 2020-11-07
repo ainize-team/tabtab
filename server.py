@@ -1,6 +1,7 @@
 from flask import Flask, request, Response, render_template, jsonify
 import requests
 import time
+import random
 
 # Server & Handling Setting
 app = Flask(__name__)
@@ -28,10 +29,12 @@ def gpt2():
         print("Empty Text")
         return Response("fail", status=400)
 
-    url = models[model] + model + "/" + length
+    url = models[model] + model + "/long"
 
     if length == 'short':
-        data = {"text": context, "num_samples": 5}
+        times = random.randrange(2, 6)
+        data = {"text": context, "num_samples": 5, "length": times}
+
     elif length == 'long':
         data = {"text": context, "num_samples": 5, "length": 20}
 
@@ -39,9 +42,11 @@ def gpt2():
     while True:
         response = requests.post(url, data=data)
 
-        print(response.status_code)
         if response.status_code == 200:
-            return response.json()
+            res = response.json()
+            for i in range(5):
+                res[str(i)] = res[str(i)].strip()
+            return res
 
         # 3초 초과 or 400 status 종료
         elif response.status_code not in [429, 200] or count == 15:

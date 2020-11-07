@@ -55,8 +55,7 @@ function complete(){
                 const selection = window.getSelection().getRangeAt(0);
 
                 const clientRects = selection.getClientRects();
-
-
+                
                 let cur_left;
                 let cur_top;
 
@@ -64,7 +63,7 @@ function complete(){
                     cur_left = String(clientRects[0].left) + "px";
                 else
                     cur_left = String(screen.width - 200 - 3) + "px";
-                
+
                 cur_top = String(window.pageYOffset + clientRects[0].top + 27) + "px";
 
 
@@ -98,7 +97,10 @@ $(document).on('mouseover', '#menu', function(){
 });
 $(document).on('click','.item',function(){
     if( TAB_ON == true ){
-        editor.innerText += this.innerText;
+         if(editor.innerText[editor.innerText.length-1].search(/\s/) == -1)
+             editor.innerText += " " + this.innerText;
+         else
+             editor.innerText += this.innerText;
 
         // 커서 이동 마지막 문자로,
         setCurrentCursorPosition(editor.innerText.length);
@@ -131,7 +133,10 @@ document.onkeydown = function(){
         if(key == KEY_CODE.ENTER){
             wrap_items = document.getElementsByClassName("wrap-item");
 
-            editor.innerText += wrap_items[idx].innerText;
+            if(editor.innerText[editor.innerText.length-1].search(/\s/) == -1)
+                editor.innerText += " " + wrap_items[idx].innerText;
+            else
+                editor.innerText += wrap_items[idx].innerText;
         }
         // 커서 이동 마지막 문자로,
         setCurrentCursorPosition(editor.innerText.length);

@@ -5,7 +5,10 @@
     .mobile{
         position: relative;
         width: 100%;
-        height: 2000px;
+        height: 1900px;
+
+        margin: 0;
+        overflow-x:hidden;
         
         background: #3A3A3A;
     }
@@ -30,18 +33,30 @@
     }
     
     .header_text.h1{
-        font-size: 40px;
+        font-size: 25px;
         line-height: 30px;
 
-        margin-left: 50px;
+        text-align: center;
         margin-bottom: 40px;
 
         width: 100%;
     }
     .header_text.p{
-        font-size: 20px;
+        margin-left: 50px;
+        margin-right: 50px;
+
+        text-align: center;
+        font-size: 17px;
         line-height: 28px;
-        margin-left: 15px;
+    }
+    .link_git{
+        content: url(../static/images/mobile_git.svg);
+        height: 30px;
+    }
+    .link_ainize{
+        margin-left: 40px;
+        content: url(../static/images/mobile_ainize.svg);
+        height: 30px;
     }
 
     .setting{
@@ -100,7 +115,7 @@
     #model{      
         cursor: pointer;
         width: 60%;
-        padding: 0.9em .8em;
+        padding: 0.4em .8em;
         opacity: 0.9;
         background-color: #3A3A3A;
         color: #FFFFFF;
@@ -121,7 +136,7 @@
         line-height: 20px;
 
         margin-left: 1%;
-        margin-top: 5%;
+        margin-top: 2%;
         margin-bottom: 5%;
         width: 80%;
 
@@ -155,17 +170,17 @@
         display: none;
     }
     .editor{
-        padding: 50px 20px 0 30px; 
+        padding: 30px 0px 0 10px; 
         border: 1px solid black;
 
-        width: 94.2%;
+        width: 96.2%;
         height: 500px;
 
         margin-top: 3%;
 
         font-family: Montserrat;
         font-style: normal;
-        font-size: 20px;
+        font-size: 18px;
         word-spacing: 6px;
 
         /* dark */
@@ -176,16 +191,12 @@
     }
     .con_share{
         position: relative;
-        width: 500px;
-        height: 200px;
-
-        margin: 80px auto 0px auto;
+        width: 100%;
+        height: 10%;
     }
 
     .share_icon{
-        position: absolute; 
-        left: 34%;
-        margin-bottom: 50px;
+        text-align: center;
     }
     .share_text {      
         text-align: center;
@@ -199,6 +210,20 @@
         line-height: 36px;
 
         color: #FFFFFF;
+    }
+
+    .share_link{
+        
+        margin-top: 30px;
+        width: 100%;
+        text-align: center;
+    }
+    .footer_git{
+
+    }
+    .footer_ainize{
+        display: block;
+        margin-top: 20px;
     }
 }
 
@@ -215,7 +240,7 @@
     }
     .header{
         position: fixed;
-        width: 98.8%;
+        width: 100%;
         top: 0;
 
         z-index: 2;
@@ -400,38 +425,8 @@
 
         color: #FFFFFF;
     }
-
-    .rectangle_tab{
-        position: relative;
-
-        height: 30px;
-        width: 60px;
-        background: #9190AE;
-        /* Button inner shadow */
-
-        margin-top: 5%;
-        box-shadow: inset 0px -3px 0px rgba(0, 0, 0, 0.25);
-        border-radius: 8px;
-    }
     .tab_icon{
-        display: inline;
-        margin-left: 7px;
-    }
-
-    .rectangle_tab_text{
-        display: inline;
-        margin-right: 14%;
-        text-align: right;
-        font-family: Montserrat;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 13px;
-        line-height: 15px;
-
-        /* identical to box height */
-
-
-        color: #FFFFFF;
+        margin-top: 21px;
     }
 
     .editor{
@@ -475,12 +470,34 @@
 
         color: #FFFFFF;
     }
-
+    .share_link{
+        position: absolute;
+        bottom: 30px;
+        left: 16%;
+    }
     .share_icon{
         position: absolute; 
         left: 34%;
     }
+    .footer_git{
+        cursor: pointer;
+    }
+    .footer_ainize{
+        cursor: pointer; margin-left: 40px;
+    }
 
+    .link_git:hover{
+        content: url(../static/images/git_hover.svg)
+    }
+    .link_git:active{
+        content: url(../static/images/git_click.svg)
+    }
+    .link_ainize:hover{
+        content: url(../static/images/ainize_hover.svg)
+    }
+    .link_ainize:active{
+        content: url(../static/images/ainize_click.svg)
+    }    
 }
 .choose_theme_text{
     font-family: Montserrat;
@@ -563,11 +580,7 @@
     content: url(../static/images/footer_twitter_hover.svg);
 }
 
-.share_link{
-    position: absolute;
-    bottom: 30px;
-    left: 16%;
-}
+
 
 #menu li {
     border-left: 3px solid transparent;
@@ -577,6 +590,10 @@
 #menu li a {
     display: block;
     padding: 10px;
+
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bold;
     color: #000000;
 
     text-decoration: none;
@@ -591,15 +608,3 @@
     color: #FFFFFF;
 }
 
-.link_git:hover{
-    content: url(../static/images/git_hover.svg)
-}
-.link_git:active{
-    content: url(../static/images/git_click.svg)
-}
-.link_ainize:hover{
-    content: url(../static/images/ainize_hover.svg)
-}
-.link_ainize:active{
-    content: url(../static/images/ainize_click.svg)
-}
