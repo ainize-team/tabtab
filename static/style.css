@@ -210,34 +210,27 @@ p.bold {
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.5);
 }
 
-.con_share{
-    position: relative;
-
-    width: 500px;
-    height: 200px;
-
-    margin: 250px auto 0px auto;
+.con_share {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    margin-top: 64px;
 }
 
-.share_text {
-    font-size: 28px;
-    line-height: 36px;
+.share_icon {
+    margin-top: 30px;
+    margin-bottom: 64px;
+}
 
-    text-align: center;
+.share_icon a {
+    margin: 0 10px;
 }
-.share_link{
-    position: absolute;
-    bottom: 30px;
-    left: 16%;
-}
-.share_icon{
-    position: absolute; 
-    left: 34%;
-}
-.footer_git{
+
+.footer_git {
     cursor: pointer;
 }
-.footer_ainize{
+.footer_ainize {
     cursor: pointer; margin-left: 40px;
 }
 
@@ -285,6 +278,29 @@ p.bold {
 }
 .footer_twitter:hover img{
     content: url(../static/images/footer_twitter_hover.svg);
+}
+
+.share_link {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 40px;
+}
+
+.share_link h4 {
+    font-size: 12px;
+    font-weight: 600;
+    color: #8E8E94;
+}
+
+.share_link a div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0px 20px;
+}
+
+.share_link img {
+    margin-right: 5.5px;
 }
 
 #menu li {
@@ -379,6 +395,9 @@ p.bold {
         height: unset;
     }
 
+    .choose_type {
+        width: 100%;
+    }
     .setting{
         display: flex;
         flex-direction: column;
@@ -409,35 +428,17 @@ p.bold {
         height: 500px;
     }
 
-    .con_share{
-        position: relative;
-        width: 100%;
-        height: 10%;
+    .share_icon {
+        margin-bottom: 16px;
     }
 
-    .share_icon{
-        text-align: center;
+    .share_link {
+        flex-direction: column;
+        align-items: center;
+        margin: 14px 0 150px 0;
     }
-    .share_text {      
-        text-align: center;
-        
-        margin-top: 50px;
-
-        font-size: 28px;
-        line-height: 36px;
-    }
-
-    .share_link{
-        
-        margin-top: 30px;
-        width: 100%;
-        text-align: center;
-    }
-    .footer_git{
-
-    }
-    .footer_ainize{
-        display: block;
-        margin-top: 20px;
+    
+    .share_link a {
+        margin: 8px 0;
     }
 }

@@ -89,12 +89,18 @@
                     </a>
                 </div>
                 <div class="share_link">
-                    <a href="https://ainize.ai/Jeong-Hyun-Su/editor-gpt2?branch=main" class="footer_git">
-                        <img src="../static/images/footer_git.svg">
-                    </a>
                     <a href="https://github.com/Jeong-Hyun-Su/editor-gpt2" class="footer_ainize">
-                        <img src="../static/images/footer_ainize.svg">
-                    </a>        
+                        <div class="share_ainize">
+                            <img src="{{ url_for('static', filename='images/footer_ainize.svg') }}">
+                        <h4>Powered By Ainize</h4>
+                        </div>
+                    </a>
+                    <a href="https://ainize.ai/Jeong-Hyun-Su/editor-gpt2?branch=main" class="footer_git">
+                        <div class="share_git">
+                            <img src="{{ url_for('static', filename='images/footer_git.svg') }}">
+                        <h4>Contribute on GitHub</h4>
+                    </div>
+                    </a>
                 </div>
             </div>
         </div>
