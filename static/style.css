@@ -1,6 +1,19 @@
 @import 'reset.css';
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+
 body {
     overflow-x:hidden;
     font-family: Montserrat;
@@ -38,11 +51,8 @@ p {
     line-height: 28px;
 }
 
-.desktop {
-    position: relative;
-    width: 100%;
-    height: 1300px;
-    background: #3A3A3A;
+p.bold {
+    font-weight: bold;
 }
 
 .header{
@@ -112,7 +122,7 @@ p {
     padding: 0 6px 0 6px;
 }
 
-.button{
+.button {
     float: left;
     padding: 5px;
     margin: 5px;
@@ -126,10 +136,10 @@ p {
     box-sizing: border-box;
     border-radius: 25px;
 }
-.test{
+.test {
     width: 120px;
 }
-.icon{
+.icon {
     float: left;
 
     width: 18px;
@@ -137,7 +147,7 @@ p {
     margin-left: 3px;
     margin-right: 5px;
 }
-.icon_label{
+.icon_label {
     display: inline;
     font-style: normal;
     font-weight: 600;
@@ -145,58 +155,46 @@ p {
 }
 .contents{
     display: flex;
-
-    position: relative;
-    width: 100%;
+    flex-direction: row;
+    
+    max-width: 1280px;
     height: 800px;
-    left: 7%;
-    top: 15%;
-}
-.choose_type{
-    margin: 1%;
+    margin: 160px auto 0 auto;
 }
 
-.option{
-    position: relative;
-    top: -20px;
+.autocomplete_type {
+    display: flex;
+    flex-direction: column;
 }
-.autocomplete_type_text{
-    font-weight: bold;
-    font-size: 20px;
-    line-height: 28px;
-}
-.group_1{
-    float: left;
-}
-.group_2{
-    float: left;
 
-    margin-left: 5%;
+.autocomplete_type .option {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
-.radio_text{
-    float: left;
-    font-size: 17px;
-}
-input[type='radio']{    
-    cursor: pointer;
-    float: left;
 
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    background-color: #808080;
-    opacity: 0.2;
-    border-radius: 50%;
-    height: 2%;
+.autocomplete_type .option .radio_text {
+    margin-right: 20px;
 }
-input[type='radio']:checked::after{
-    opacity: 1;
-    box-sizing: border-box;
-    border-radius: 50%;
 
-    /* light violet */
-    background-color: #AD87FF;
+.choose_type {
+    width: 380px;
+    margin-right: 40px;
 }
-.choose_theme{
-    margin-top: 20%;
+
+.choose_theme {
+    margin-top: 32px;
+}
+
+.choose_theme select {
+    margin: 8.8px 0;
+}
+
+.choose_theme .description {
+    font-size: 14px;
+    line-height: 20px;
+
+    opacity: 0.6;
 }
 
 #model{
@@ -206,50 +204,36 @@ input[type='radio']:checked::after{
     opacity: 0.9;
     background-color: #3A3A3A;
     /* white */
+    color: #FFFFFF;
     filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25));
     border-radius: 10px;
 
     position: relative;
-    top: -8px;
 }
 
-.description{
-    font-size: 15px;
-    line-height: 20px;
-
-    width: 400px;
-
-    margin-left: 1%;
-    margin-top: 5%;
-    margin-bottom: 15%;
-
-    opacity: 0.7;
-}
-
-.trigger{
+.trigger {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    padding: 0px;
+
+    margin-top: 40px;
 }
 
-.or{
+.or {
     margin: 20px 10px;
 }
+
 .tab_icon{
     margin-top: 21px;
 }
 
-.editor{
+.editor {
     padding: 20px 20px; 
     border: 1px solid black;
 
-    width: 56%;
-    height: 700px;
+    font-size: 16px;
+    line-height: 28px;
 
-    margin-top: 3%;
-
-    font-size: 20px;
     word-spacing: 6px;
 
     /* dark */
@@ -289,12 +273,6 @@ input[type='radio']:checked::after{
     cursor: pointer; margin-left: 40px;
 }
 
-.choose_theme_text{
-    font-weight: bold;
-    font-size: 20px;
-    line-height: 28px;
-}
-
 #menu {
     display: none;
     width: 200px;
@@ -314,25 +292,21 @@ input[type='radio']:checked::after{
     cursor: pointer;
     height: 60px;
     width: 202px;
-    left: 0px;
-    top: 0px;
     border-radius: 10px;
-    
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     background: #1A1B1F;
-    border-radius: 10px;
-    
-    box-shadow: inset 0px -6px 0px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
+    filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25));
 }
+
 .rectangle:hover{
-    box-shadow: 200px 0 0 0 rgba(133,76,255,1) inset, -200px 0 0 0 rgba(133,76,255,1) inset;
+    background: #854CFF;
 }
-.rectangle_text{
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 30px;
-    letter-spacing: 0px;
-    text-align: center;
+.rectangle:active{
+    background: #6535CC;
 }
 
 .footer_link:hover img{
@@ -366,6 +340,13 @@ input[type='radio']:checked::after{
     border-left: 3px solid #606060;
 }
 
+@media (max-width:1140px) {
+    .contents {
+        max-width: 1060px;
+        width: 90%;
+    }
+}
+
 @media (max-width:424px) {
     .header {
         position: relative;
@@ -378,7 +359,7 @@ input[type='radio']:checked::after{
     }
 
     .title .header_div {
-        order: 2;
+        order: 2; 
 
         flex-direction: column;
 
@@ -423,49 +404,18 @@ input[type='radio']:checked::after{
         line-height: 20px;
     }
 
+    .contents {
+        display: flex;
+        flex-direction: column;
+
+        width: 100%;
+        margin: 0;
+        height: unset;
+    }
     .setting{
         display: flex;
         flex-direction: column;
     }
-    .autocomplete_type{
-        order: 1;
-        
-        margin: 40px;
-    }
-    .choose_theme{
-        order: 2;
-    }
-    .autocomplete_type_text{
-        font-weight: bold;
-        font-size: 23px;
-        line-height: 0px;
-    }
-    .group_1{
-        float: left;
-    }
-    .group_2{
-        float: left;
-        margin-left: 20px;
-    }
-    .radio_text{
-        float: left;
-        font-size: 17px;
-    }
-    input[type='radio']{
-        float: left;
-        cursor: pointer;
-        
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        background-color: #808080;
-        opacity: 0.2;
-        border-radius: 50%;
-        height: 20px;
-    }
-
-    .choose_theme{
-        margin-left: 40px;
-    }
-
 
     #model{      
         cursor: pointer;
@@ -476,10 +426,6 @@ input[type='radio']:checked::after{
         /* white */
         filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25));
         border-radius: 10px;
-
-        font-size: 17px;
-        position: relative;
-        top: -8px;
     }
 
     .description{
@@ -492,15 +438,6 @@ input[type='radio']:checked::after{
         width: 80%;
 
         opacity: 0.7;
-    }
-
-    .trigger{
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        padding: 0px;
-
-        margin-bottom: 30px;
     }
 
     .or{
