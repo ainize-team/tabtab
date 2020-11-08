@@ -10,24 +10,27 @@
         <div class="desktop mobile">
             <div class="header">
                 <div class="title">
-                    <svg class="header_icon" width="57" height="58" viewBox="0 0 57 58" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M47.215 19.3817L42.75 29.1667L38.285 19.3817L28.5 14.9167L38.285 10.4517L42.75 0.666656L47.215 10.4517L57 14.9167L47.215 19.3817Z" fill="white"/>
-                        <path d="M19 19.6667L24.9375 32.7291L38 38.6667L24.9375 44.6041L19 57.6666L13.0625 44.6041L0 38.6667L13.0625 32.7291L19 19.6667Z" fill="white"/>
-                    </svg>
                     <div class="header_div">
-                        <h1 class="header_text h1">AI writer with Ainize</h1>
-                        <p class="header_text p">a smart machine that completes your thoughts.</p>
+                        <img class="header_icon"
+                            srcset="../static/images/header_icon_small.svg 420w,
+                                ../static/images/header_icon.svg"
+                            src="{{ url_for('static', filename='images/header_icon.svg') }}">
+                        <div>
+                            <h1>AI writer with Ainize</h1>
+                            <p>a smart machine that completes your thoughts.</p>
+                        </div>
                     </div>
                     <div class="link">
-                        <a class="link_git" href="https://github.com/Jeong-Hyun-Su/editor-gpt2" style="cursor: pointer;">
-                            <img src="../static/images/git.svg">           
-                        </a>                      
-                        <a class="link_ainize" href="https://ainize.ai/Jeong-Hyun-Su/editor-gpt2?branch=main" style="cursor: pointer;">
-                            <img src="../static/images/ainize.svg">            
-                        </a>
+                        <div class="link_git">
+                            <img src="{{ url_for('static', filename='images/icon-social-git-hub.svg') }}">
+                            <h4>GitHub</h4>
+                        </div>
+                        <div class="link_ainize">
+                            <img src="{{ url_for('static', filename='images/ainize_logo_tiny.svg') }}">
+                            <h4>Testing API</h4>
+                        </div>
                     </div>
                 </div>
-                <hr class="line">
             </div>
 
             <div class="contents">
