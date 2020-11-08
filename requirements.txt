@@ -1,2 +1,3 @@
-flask
-waitress
+flask==1.1.2
+waitress==1.4.4
+requests==2.24.0
