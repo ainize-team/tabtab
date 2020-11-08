@@ -81,7 +81,6 @@ p.bold {
     align-items: center;
 }
 
-
 .title .header_icon {
     margin: 5px 0 5px 22px;
     padding: 22px;
@@ -122,37 +121,6 @@ p.bold {
     padding: 0 6px 0 6px;
 }
 
-.button {
-    float: left;
-    padding: 5px;
-    margin: 5px;
-    
-    width: 95px;
-    height: 30px;
-
-    margin-top: 28%;
-
-    border: 1px solid #606060;
-    box-sizing: border-box;
-    border-radius: 25px;
-}
-.test {
-    width: 120px;
-}
-.icon {
-    float: left;
-
-    width: 18px;
-    height: 18px;
-    margin-left: 3px;
-    margin-right: 5px;
-}
-.icon_label {
-    display: inline;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-}
 .contents{
     display: flex;
     flex-direction: row;
@@ -228,7 +196,7 @@ p.bold {
 }
 
 .editor {
-    padding: 20px 20px; 
+    padding: 50px 50px; 
     border: 1px solid black;
 
     font-size: 16px;
@@ -360,9 +328,7 @@ p.bold {
 
     .title .header_div {
         order: 2; 
-
         flex-direction: column;
-
         width: 80%;
     }
 
@@ -390,9 +356,9 @@ p.bold {
         margin: 6px 0 6px 0;
     }
 
-    .title .link div {
+    /* .title .link div {
         border: none;
-    }
+    } */
 
     .title .header_div h1 {
         font-size: 24px;
@@ -412,32 +378,15 @@ p.bold {
         margin: 0;
         height: unset;
     }
+
     .setting{
         display: flex;
         flex-direction: column;
-    }
-
-    #model{      
-        cursor: pointer;
-        width: 60%;
-        padding: 0.4em .8em;
-        opacity: 0.9;
-        background-color: #3A3A3A;
-        /* white */
-        filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25));
-        border-radius: 10px;
+        margin: 30px;
     }
 
     .description{
-        font-size: 15px;
-        line-height: 20px;
-
-        margin-left: 1%;
-        margin-top: 2%;
-        margin-bottom: 5%;
-        width: 80%;
-
-        opacity: 0.7;
+        margin: 0;
     }
 
     .or{
@@ -454,23 +403,12 @@ p.bold {
     .rectangle_tab_text{
         display: none;
     }
+    
     .editor{
-        padding: 30px 0px 0 10px; 
-        border: 1px solid black;
-
-        width: 96.2%;
+        padding: 25px;
         height: 500px;
-
-        margin-top: 3%;
-
-        font-size: 18px;
-        word-spacing: 6px;
-
-        /* dark */
-        background: #1A1B1F;
-        opacity: 0.5;
-        box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.5);
     }
+
     .con_share{
         position: relative;
         width: 100%;
