@@ -4,7 +4,7 @@ import time
 import random
 
 # Server & Handling Setting
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 
 models = {
     "gpt2-large": "http://main-gpt2-large-jeong-hyun-su.endpoint.ainize.ai/",
