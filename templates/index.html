@@ -8,7 +8,7 @@
 
         <link href="/static/images/favicon.png" rel="shortcut icon" type="image/png">
         <title>Tab Tab!</title>
-        <meta property="og:title" content="Tab Tab!">
+        <meta property="og:title" content="TabTab!">
         <meta property="og:type" content="website">
         <meta property="og:url" content="https://kubecon-tabtab-jeong-hyun-su.endpoint.ainize.ai/">
         <meta property="og:image:type" content="image/png">
@@ -28,16 +28,16 @@
                                 ../static/images/header_icon.svg"
                             src="{{ url_for('static', filename='images/header_icon.svg') }}">
                         <div>
-                            <a onClick="window.location.reload()" style="cursor: pointer;">Tab Tab!</a>
+                            <a onClick="window.location.reload()" style="cursor: pointer;">TabTab</a>
                             <p>a smart machine that completes your thoughts.</p>
                         </div>
                     </div>
                     <div class="link">
-                        <a class="link_git" href='https://github.com/Jeong-Hyun-Su/tabtab'>
+                        <a class="link_git" href='https://github.com/Jeong-Hyun-Su/tabtab' target="_blank">
                             <img src="{{ url_for('static', filename='images/icon-social-git-hub.svg') }}">
                             <h4>GitHub</h4>
                         </a>
-                        <a class="link_git" href='https://ainize.ai/Jeong-Hyun-Su/editor-gpt2?branch=main'>
+                        <a class="link_git" href='https://ainize.ai/Jeong-Hyun-Su/tabtab?branch=kubecon' target="_blank">
                             <img src="{{ url_for('static', filename='images/ainize_logo_tiny.svg') }}">
                             <h4>Testing API</h4>
                         </a>
@@ -60,7 +60,7 @@
                             <p class="bold">Choose Theme</p>
                             <select name="model" id="model" onchange="showDescription(this)">
                                 <option value="gpt2-large" selected>Base</option>
-                                <option value="gpt2-cover-letter">Cover-Letter</option>
+                                <option value="gpt2-cover-letter">Cover Letter</option>
                                 <option value="gpt2-reddit">Reddit</option>
                                 <option value="gpt2-story">Story</option>
                                 <option value="gpt2-ads">Ads</option>
@@ -70,7 +70,7 @@
                             </select>
         
                             <p class="description">This is the basic model in GPT-2.
-                                <br><br><a href='https://ainize.ai/Jeong-Hyun-Su/gpt2-large' style='color: #FFFFFF;'>https://ainize.ai/Jeong-Hyun-Su/gpt2-large</a>
+                                <br><br><a href='https://ainize.ai/Jeong-Hyun-Su/gpt2-large' style='color: #FFFFFF;' target="_blank">https://ainize.ai/Jeong-Hyun-Su/gpt2-large</a>
                             </p>
                             <div class="trigger">
                                 <div class="rectangle">
@@ -79,37 +79,38 @@
                                 <p class="or">or</p>
                                 <img class="tab_icon" src="../static/images/tab.svg">
                             </div>
+                            <div class="tab_text">* Press the <p style="color:#A56BEE">Run Autocomplete</p> button or the <p style="color:#A56BEE">Tab</p> Key until you get the result you want</div>
                         </div>
                     </div>
                 </div>
                 <div class='editor' contenteditable="true" autocomplete="off" autocorrect="off" autocapiatlise="off" spellcheck="false">
                     Ainize is a launchpad for open-source projects.
 Programming code is merely a text unless it is allocated with proper computing resources.
-Ainize is about bringing Open-source projects to life by turning them into instantly executable services or APIs.
+Ainize is about bringing Open-source projects to life by turning them into instantly executable services or APIs. ✨
                 </div>
             </div>
 
             <div class="con_share">
-                <h2 class="share_text">Share Tab Tab!</h2>
+                <h2 class="share_text">Share TabTab!</h2>
                 <div class="share_icon">
-                    <a class="footer_link" href="#" style="cursor: pointer;">
+                    <a class="footer_link" href="#" style="cursor: pointer;" target="_blank">
                         <img src="../static/images/footer_link.svg">
                     </a>
                     <a class="footer_facebook" href="#" style="cursor: pointer;">
-                        <img src="../static/images/footer_facebook.svg">
+                        <img src="../static/images/footer_facebook.svg" target="_blank">
                     </a>
                     <a class="footer_twitter" href="#" style="cursor: pointer;">
-                        <img src="../static/images/footer_twitter.svg">
+                        <img src="../static/images/footer_twitter.svg" target="_blank">
                     </a>
                 </div>
                 <div class="share_link">
-                    <a href="https://ainize.ai/Jeong-Hyun-Su/editor-gpt2?branch=main" class="footer_ainize">
+                    <a href="https://ainize.ai/Jeong-Hyun-Su/tabtab?branch=kubecon" class="footer_ainize" target="_blank">
                         <div class="share_ainize">
                             <img src="{{ url_for('static', filename='images/footer_ainize.svg') }}">
                         <h4>Powered by Ainize</h4>
                         </div>
                     </a>
-                    <a href="https://github.com/Jeong-Hyun-Su/tabtab" class="footer_git">
+                    <a href="https://github.com/Jeong-Hyun-Su/tabtab" class="footer_git" target="_blank">
                         <div class="share_git">
                             <img src="{{ url_for('static', filename='images/footer_git.svg') }}">
                         <h4>Contribute on GitHub</h4>

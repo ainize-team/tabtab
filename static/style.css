@@ -190,6 +190,10 @@ p.bold {
     position: relative;
 }
 
+#model:focus{
+    outline-color: #A56BEE;
+}
+
 .trigger {
     display: flex;
     flex-direction: row;
@@ -201,7 +205,15 @@ p.bold {
 .or {
     margin: 20px 10px;
 }
-
+.tab_text, .tab_text p{
+    display: inline;
+    margin-top: 15px;
+    font-size: 14px;
+    line-height: 28px;
+}
+.tab_text p{
+     color:#A56BEE;
+}
 .tab_icon{
     margin-top: 21px;
 }
@@ -222,7 +234,9 @@ p.bold {
     opacity: 0.5;
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.5);
 }
-
+.editor:focus{
+    outline-color: #A56BEE;
+}
 .con_share {
     display: flex;
     flex-direction: column;
@@ -261,6 +275,8 @@ p.bold {
         0 5px 15px rgba(0,0,0,0.07);
     overflow: hidden;
     z-index: 999999;
+
+    line-height: 150%;
 }
 
 .rectangle{   
@@ -436,7 +452,9 @@ p.bold {
     .tab_icon{
         display: none;
     }
-
+    .tab_text{
+        display: none;
+    }
     .rectangle_tab_text{
         display: none;
     }
