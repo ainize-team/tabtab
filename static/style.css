@@ -442,6 +442,7 @@ p.bold {
     }
     
     .editor{
+        width: unset;
         padding: 25px;
         height: 500px;
     }
