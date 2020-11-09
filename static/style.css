@@ -94,7 +94,7 @@ p.bold {
     margin-right: 50px;
 }
 
-.title .link div {
+.title .link a {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -107,6 +107,9 @@ p.bold {
     
     margin: 6px;
     cursor: pointer;
+
+    text-decoration:none;
+    color: #FFFFFF;
 }
 
 .title .link div:hover {
@@ -196,6 +199,8 @@ p.bold {
 }
 
 .editor {
+    width: 100%;
+
     padding: 50px 50px; 
     border: 1px solid black;
 
@@ -290,6 +295,10 @@ p.bold {
     font-size: 12px;
     font-weight: 600;
     color: #8E8E94;
+}
+
+.share_link a {
+    text-decoration:none;
 }
 
 .share_link a div {
