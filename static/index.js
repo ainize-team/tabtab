@@ -9,6 +9,45 @@ var auto_button = document.getElementsByClassName("rectangle")[0];
 
 const KEY_CODE = {"TAB" : 9, "UP" : 38, "DOWN" : 40, "ENTER" : 13};
 
+const fb = document.getElementsByClassName('footer_facebook');
+const tw = document.getElementsByClassName('footer_twitter');
+const cp = document.getElementsByClassName('footer_link');
+
+if (fb) {
+    Array.from(fb).forEach(
+      fb => fb.addEventListener("click", () => {
+        window.open("https://www.facebook.com/sharer/sharer.php"
+          +"?u="+encodeURIComponent(window.location.href)
+        );
+      })
+    )
+  }
+  
+if (tw) {
+    Array.from(tw).forEach(
+        tw => tw.addEventListener("click", () => {
+            window.open("https://twitter.com/intent/tweet?="
+                +"&url="+encodeURIComponent(window.location.href)
+            );
+        })
+    )
+}
+
+if (cp) {
+    Array.from(cp).forEach(
+        cp => cp.addEventListener("click", copyToClipboard)
+    )
+}
+
+function copyToClipboard() {
+    var t = document.createElement("textarea");
+    document.body.appendChild(t);
+    t.value = document.location.href;
+    t.select();
+    document.execCommand('copy');
+    document.body.removeChild(t);
+}
+
 function complete(){
     const select_model = document.getElementById("model");
     const model = select_model.options[select_model.selectedIndex].value;

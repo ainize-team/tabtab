@@ -112,11 +112,11 @@ p.bold {
     color: #FFFFFF;
 }
 
-.title .link div:hover {
+.title .link a:hover {
     background-color: #606060;
 }
 
-.title .link div:active {
+.title .link a:active {
     background-color: #808080;
 }
 
@@ -230,6 +230,7 @@ p.bold {
 
 .share_icon a {
     margin: 0 10px;
+    text-decoration: none;
 }
 
 .footer_git {
