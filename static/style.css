@@ -337,6 +337,14 @@ p.bold {
     margin-right: 5.5px;
 }
 
+#badge{
+    position: fixed; 
+    bottom: 40px; 
+    right: 40px; 
+    filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25)); 
+    cursor:pointer;
+}
+
 #menu li {
     border-left: 3px solid transparent;
     transition: ease .2s;
@@ -406,10 +414,6 @@ p.bold {
         margin: 6px 0 6px 0;
     }
 
-    /* .title .link div {
-        border: none;
-    } */
-
     .title .header_div h1 {
         font-size: 24px;
         line-height: 36px;
@@ -478,10 +482,16 @@ p.bold {
     .share_link {
         flex-direction: column;
         align-items: center;
-        margin: 14px 0 150px 0;
+        margin: 14px 0 80px 0;
     }
     
     .share_link a {
         margin: 8px 0;
+    }
+
+    #badge{
+        position: relative;
+        left: 0;
+        right: 0;
     }
 }
