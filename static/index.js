@@ -1,6 +1,9 @@
 var idx = 0,       // 탭 번호
 TAB_ON = false; // 탭 활성화
 
+var TAB_PRESS = false;
+
+
 var editor = document.getElementsByClassName("editor")[0],
 menu = document.getElementById("menu"),
 items  = document.getElementsByClassName("item");
@@ -173,12 +176,13 @@ auto_button.onclick = function(){
     complete();
 }
 
-document.onkeydown = function(e){
+document.onkeydown = function(){
     const key = event.keyCode;
 
     // 탭을 누를 때, 5개의 추천 단어 활성화
     if(key == KEY_CODE.TAB){
         complete();
+
         // 주소창 focus를 막기
         event.preventDefault();
     }
@@ -204,12 +208,13 @@ document.onkeydown = function(e){
                 else
                     editor.innerText += wrap_items[idx].innerText;
             }
+
+            // 주소창 focus를 막기
+            event.preventDefault();
         }
         // 커서 이동 마지막 문자로,
         setCurrentCursorPosition(editor.innerText.length);
 
-        // 커서 이동 후, 다음 줄 넘어가는 것을 방지
-        event.preventDefault();
 
         // 탭 비활성화
         menu.style.display = "none";
@@ -218,6 +223,7 @@ document.onkeydown = function(e){
     }
     // TAB 활성화 && UP 혹은 DOWN
     else if(TAB_ON == true && (key == KEY_CODE.UP || key == KEY_CODE.DOWN)){
+        // 주소창 focus를 막기
         event.preventDefault();
 
         // 해당 아이템 포커싱
