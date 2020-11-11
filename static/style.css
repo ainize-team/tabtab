@@ -445,6 +445,12 @@ p.bold {
     .or{
         display: none;
     }
+    .rectangle{
+        position:fixed;
+        z-index: 10000;
+        bottom:10px;
+	    right:10px;
+    }
 
     .rectangle_tab{
         display: none;
