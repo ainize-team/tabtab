@@ -208,7 +208,7 @@ p.bold {
 .tab_text, .tab_text p{
     display: inline;
     margin-top: 15px;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 28px;
 }
 .tab_text p{

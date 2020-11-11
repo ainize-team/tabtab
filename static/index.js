@@ -1,11 +1,9 @@
 var idx = 0,       // 탭 번호
-    TAB_ON = false; // 탭 활성화
-
-var TAB_PRESS = false;
+TAB_ON = false; // 탭 활성화
 
 var editor = document.getElementsByClassName("editor")[0],
-    menu = document.getElementById("menu"),
-    items  = document.getElementsByClassName("item");
+menu = document.getElementById("menu"),
+items  = document.getElementsByClassName("item");
 
 var auto_button = document.getElementsByClassName("rectangle")[0];
 
@@ -51,9 +49,6 @@ function copyToClipboard() {
 }
 
 function complete(){
-    if(TAB_PRESS == true) return;
-    TAB_PRESS = true;
-
     const select_model = document.getElementById("model");
     const model = select_model.options[select_model.selectedIndex].value;
 
@@ -77,7 +72,6 @@ function complete(){
     )
     .then(response => {
         if ( response.status == 200 ){
-            TAB_PRESS = false;
             return response;
         }
         else{
@@ -93,38 +87,40 @@ function complete(){
         for(let i=0; i<items.length; i++){
             items[i].innerHTML = response[i];
         }
+        editor.focus();
 
-        (function PopupShow(){
-            // 커서의 위치 Get
-            const selection = window.getSelection().getRangeAt(0);
+        if(typeof window.getSelection != "undefined"){
+            (function PopupShow(){
+                // 커서의 위치 Get
+                const selection = window.getSelection().getRangeAt(0);
 
-            const clientRects = selection.getClientRects();
+                const clientRects = selection.getClientRects();
+                
+                let cur_left;
+                let cur_top;
 
-            let cur_left;
-            let cur_top;
+                if(clientRects[0].left + 200 < screen.width)
+                    cur_left = String(clientRects[0].left) + "px";
+                else
+                    cur_left = String(screen.width - 200 - 3) + "px";
 
-            if(clientRects[0].left + 200 < screen.width)
-                cur_left = String(clientRects[0].left) + "px";
-            else
-                cur_left = String(screen.width - 200 - 3) + "px";
+                cur_top = String(window.pageYOffset + clientRects[0].top + 27) + "px";
 
-            cur_top = String(window.pageYOffset + clientRects[0].top + 27) + "px";
-            
-            // Tab을 누를 경우, 팝업 메뉴가 뜸 ( 커서의 위치를 기준으로 )
-            menu.style.left = cur_left;
-            menu.style.top = cur_top;
-            menu.style.display = "block";
-            menu.style.position = "absolute";
-        })();
 
-        TAB_ON = true;
-        idx = 0;
+                // Tab을 누를 경우, 팝업 메뉴가 뜸 ( 커서의 위치를 기준으로 )
+                menu.style.left = cur_left;
+                menu.style.top = cur_top;
+                menu.style.display = "block";
+                menu.style.position = "absolute";
+            })();
 
-        document.getElementsByClassName("wrap-item")[idx].focus();
+            TAB_ON = true;
+            idx = 0;
 
+            document.getElementsByClassName("wrap-item")[idx].focus();
+        }
     })
     .catch(e =>{
-        TAB_PRESS = false;
     });
 }
 
@@ -134,10 +130,9 @@ editor.onclick = function(){
     idx = 0;
     TAB_ON = false;
 }
-$(document).on('mouseover', '.item', function(){
+$(document).on('mouseover', '#menu', function(){
    if( TAB_ON == true ) {
-        idx = this.parentElement.tabIndex-1;
-        this.focus();
+
    }
 });
 $(document).on('click','.item',function(){
@@ -176,27 +171,15 @@ document.onkeydown = function(){
     else if(TAB_ON == true && (key == KEY_CODE.ENTER || (key != KEY_CODE.UP && key != KEY_CODE.DOWN))){
         // ENTER 누를 때, 에디터에 해당 글자 대입
         if(key == KEY_CODE.ENTER){
-            const charList = [",", ".", "(", ")", "?", "!", "{", "}", "[", "]"];
-            let charHas = false;
             wrap_items = document.getElementsByClassName("wrap-item");
 
-            for(let i=0; i<charList.length; i++){
-                    if(wrap_items[idx].innerText[0] == charList[i])
-                        charHas = true;
-            }
-            if(charHas == true){
+            if(editor.innerText[editor.innerText.length-1].search(/\s/) == -1)
+                editor.innerText += " " + wrap_items[idx].innerText;
+            else
                 editor.innerText += wrap_items[idx].innerText;
-            }
-            else{
-                if(editor.innerText[editor.innerText.length-1].search(/\s/) == -1)
-                    editor.innerText += " " + wrap_items[idx].innerText;
-                else
-                    editor.innerText += wrap_items[idx].innerText;
-            }
         }
-
         // 커서 이동 마지막 문자로,
-        setCurrentCursorPosition(editor.childNodes[0].length);
+        setCurrentCursorPosition(editor.innerText.length);
 
         // 커서 이동 후, 다음 줄 넘어가는 것을 방지
         event.preventDefault();
@@ -255,7 +238,7 @@ function setCurrentCursorPosition(chars) {
     if (chars >= 0) {
         var selection = window.getSelection();
 
-        range = createRange(editor, {
+        range = createRange(editor.parentNode, {
             count: chars
         });
 
