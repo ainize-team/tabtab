@@ -452,14 +452,16 @@ p.bold {
     .rectangle{
         position:fixed;
         z-index: 10000;
-        background: none;
-        bottom:10px;
+        
+        background: #854CFF;
+        bottom:20px;
         right:120px;
         
-        height: 75px;
-        content: url(../static/images/ainize_run.svg);
+        height: 60px;
     }
-
+    .rectangle:active{
+        background: #6535CC;
+    }
     .rectangle_tab{
         display: none;
     }
