@@ -465,12 +465,10 @@ button:disabled {
     }
     .rectangle{
         position:fixed;
-        z-index: 10000;
+        z-index: 2;
 
         bottom:20px;
-        right:120px;
-        
-        height: 60px;
+        left:20px;
     }
     .rectangle_tab{
         display: none;
