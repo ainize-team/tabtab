@@ -455,32 +455,18 @@ button:disabled {
         flex-direction: column;
         margin: 30px;
     }
-
-    .description{
-        margin: 0;
+    
+    .trigger {
+        visibility: hidden;
     }
-
-    .or{
-        display: none;
-    }
-    .rectangle{
+    
+    .rectangle {
+        visibility: visible;
         position:fixed;
         z-index: 2;
 
         bottom:20px;
         left:20px;
-    }
-    .rectangle_tab{
-        display: none;
-    }
-    .tab_icon{
-        display: none;
-    }
-    .tab_text{
-        display: none;
-    }
-    .rectangle_tab_text{
-        display: none;
     }
     
     .editor{
