@@ -1,14 +1,12 @@
-var idx = 0,       // 탭 번호
-TAB_ON = false; // 탭 활성화
+let idx = 0; // 탭 번호
+let TAB_ON = false; // 탭 활성화
+let TAB_PRESS = false;
 
-var TAB_PRESS = false;
+let editor = document.getElementsByClassName("editor")[0];
+let menu = document.getElementById("menu");
+let items = document.getElementsByClassName("item");
 
-
-var editor = document.getElementsByClassName("editor")[0],
-menu = document.getElementById("menu"),
-items  = document.getElementsByClassName("item");
-
-var auto_button = document.getElementsByClassName("rectangle")[0];
+let auto_button = document.getElementsByClassName("rectangle")[0];
 
 const KEY_CODE = {"TAB" : 9, "UP" : 38, "DOWN" : 40, "ENTER" : 13, "PASTE" : 86};
 
@@ -40,19 +38,19 @@ if (cp) {
     Array.from(cp).forEach(
         cp => cp.addEventListener("click", copyToClipboard)
     )
-}
 
-function copyToClipboard() {
-    var t = document.createElement("textarea");
-    document.body.appendChild(t);
-    t.value = document.location.href;
-    t.select();
-    document.execCommand('copy');
-    document.body.removeChild(t);
+    function copyToClipboard() {
+        let t = document.createElement("textarea");
+        document.body.appendChild(t);
+        t.value = document.location.href;
+        t.select();
+        document.execCommand('copy');
+        document.body.removeChild(t);
+    }
 }
 
 function complete(){
-    if(TAB_PRESS == true) return;
+    if (TAB_PRESS == true) return;
     TAB_PRESS = true;
 
     const select_model = document.getElementById("model");
@@ -255,7 +253,7 @@ function createRange(node, chars, range) {
             }
         }
         else {
-            for (var lp = 0; lp < node.childNodes.length; lp++) {
+            for (let lp = 0; lp < node.childNodes.length; lp++) {
                 range = createRange(node.childNodes[lp], chars, range);
 
                 if (chars.count === 0) {
@@ -270,9 +268,9 @@ function createRange(node, chars, range) {
 
 function setCurrentCursorPosition(chars) {
     if (chars >= 0) {
-        var selection = window.getSelection();
+        let selection = window.getSelection();
 
-        range = createRange(editor, {
+        let range = createRange(editor, {
             count: chars
         });
 
