@@ -452,10 +452,16 @@ p.bold {
     .rectangle{
         position:fixed;
         z-index: 10000;
-        bottom:10px;
-	    right:10px;
+        
+        background: #854CFF;
+        bottom:20px;
+        right:120px;
+        
+        height: 60px;
     }
-
+    .rectangle:active{
+        background: #6535CC;
+    }
     .rectangle_tab{
         display: none;
     }
@@ -490,8 +496,8 @@ p.bold {
     }
 
     #badge{
-        position: relative;
-        left: 0;
-        right: 0;
+        content: url(../static/images/ainize_button.svg);
+        bottom: 10px; 
+        right: 10px; 
     }
 }
