@@ -241,9 +241,22 @@ p.bold {
     opacity: 0.5;
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.5);
 }
-.editor:focus{
+
+.focus-ring {
+    outline-style: auto;
     outline-color: #A56BEE;
 }
+
+
+.ql-editor {
+    outline: none;
+    height: 90%;
+}
+
+.ql-clipboard {
+    visibility: hidden;
+}
+
 .con_share {
     display: flex;
     flex-direction: column;
