@@ -17,6 +17,18 @@ var options = {
 var quill = new Quill('.editor', options);
 delete quill.getModule('keyboard').bindings["9"]
 
+// Editor Focus
+let isFocus = false;
+
+document.getElementById("editor").firstChild.onfocus = (e) => {
+    e.target.parentElement.classList.add('focus-ring');
+    isFocus = true;
+};
+document.getElementById("editor").firstChild.onblur = (e) => {
+    e.target.parentElement.classList.remove('focus-ring');
+    isFocus = false;
+};
+
 // Text Cursor position
 let curCursor = 0;
 
@@ -138,7 +150,6 @@ function complete(){
     });
 }
 
-
 editor.onclick = function(){
     // 탭 비활성화
     menu.style.display = "none";
@@ -182,6 +193,8 @@ auto_button.onclick = function(){
 }
 
 document.onkeydown = function(){
+    if (!isFocus) return;
+
     const key = event.keyCode;
 
     // 탭을 누를 때, 5개의 추천 단어 활성화
