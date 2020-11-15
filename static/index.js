@@ -27,8 +27,9 @@ quill.on('editor-change', function(eventName, ...args) {
         }
     }
 });
-const loader = document.querySelector('.loader')
-quill.container.appendChild(loader)
+const loader = document.querySelector('.loader');
+quill.container.appendChild(loader);
+quill.container.appendChild(menu);
 
 // *************
 // Editor Focus
@@ -141,29 +142,9 @@ function complete(){
             items[i].innerHTML = response[i];
         }
 
-        (function PopupShow(){
-            // 커서의 위치 Get
-            const selection = window.getSelection().getRangeAt(0);
-
-            const clientRects = selection.getClientRects();
-
-            let cur_left;
-            let cur_top;
-
-            if(clientRects[0].left + 200 < screen.width)
-                cur_left = String(clientRects[0].left) + "px";
-            else
-                cur_left = String(screen.width - 200 - 3) + "px";
-
-            cur_top = String(window.pageYOffset + clientRects[0].top + 27) + "px";
-
-            // Tab을 누를 경우, 팝업 메뉴가 뜸 ( 커서의 위치를 기준으로 )
-            menu.style.left = cur_left;
-            menu.style.top = cur_top;
-            menu.style.display = "block";
-            menu.style.position = "absolute";
-        })();
-
+        menu.style.display = 'unset';
+        menu.style.top = `${bounds.top + 16}px`;
+        menu.style.left = `${bounds.left}px`;
         TAB_ON = true;
         idx = 0;
 
