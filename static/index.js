@@ -1,17 +1,45 @@
-var idx = 0,       // 탭 번호
-TAB_ON = false; // 탭 활성화
+let idx = 0; // 탭 번호
+let TAB_ON = false; // 탭 활성화
+let TAB_PRESS = false;
 
-var TAB_PRESS = false;
+let editor = document.getElementsByClassName("editor")[0];
+let menu = document.getElementById("menu");
+let items = document.getElementsByClassName("item");
 
-
-var editor = document.getElementsByClassName("editor")[0],
-menu = document.getElementById("menu"),
-items  = document.getElementsByClassName("item");
-
-var auto_button = document.getElementsByClassName("rectangle")[0];
+let auto_button = document.getElementsByClassName("rectangle")[0];
 
 const KEY_CODE = {"TAB" : 9, "UP" : 38, "DOWN" : 40, "ENTER" : 13, "PASTE" : 86};
 
+// Quill Text editor Initialize
+var options = {
+    theme: null
+};
+var quill = new Quill('.editor', options);
+delete quill.getModule('keyboard').bindings["9"]
+quill.on('editor-change', function(eventName, ...args) {
+    if (eventName === 'selection-change') {
+        if (args[0]) {
+            curCursor = args[0].index;
+        }
+    }
+});
+
+// Editor Focus
+let isFocus = false;
+
+document.getElementById("editor").firstChild.onfocus = (e) => {
+    e.target.parentElement.classList.add('focus-ring');
+    isFocus = true;
+};
+document.getElementById("editor").firstChild.onblur = (e) => {
+    e.target.parentElement.classList.remove('focus-ring');
+    isFocus = false;
+};
+
+// Text Cursor position
+let curCursor = 0;
+
+// share link
 const fb = document.getElementsByClassName('footer_facebook');
 const tw = document.getElementsByClassName('footer_twitter');
 const cp = document.getElementsByClassName('footer_link');
@@ -40,19 +68,19 @@ if (cp) {
     Array.from(cp).forEach(
         cp => cp.addEventListener("click", copyToClipboard)
     )
-}
 
-function copyToClipboard() {
-    var t = document.createElement("textarea");
-    document.body.appendChild(t);
-    t.value = document.location.href;
-    t.select();
-    document.execCommand('copy');
-    document.body.removeChild(t);
+    function copyToClipboard() {
+        let t = document.createElement("textarea");
+        document.body.appendChild(t);
+        t.value = document.location.href;
+        t.select();
+        document.execCommand('copy');
+        document.body.removeChild(t);
+    }
 }
 
 function complete(){
-    if(TAB_PRESS == true) return;
+    if (TAB_PRESS == true) return;
     TAB_PRESS = true;
 
     const select_model = document.getElementById("model");
@@ -65,8 +93,8 @@ function complete(){
     else if(select_length[1].checked == true) length = select_length[1].value;
 
     let formData = new FormData();
-
-    formData.append("context", editor.innerText);
+    let cur = getCurrentCursorPosition();
+    formData.append("context", quill.getText(0, cur));
     formData.append("model", model);
     formData.append("length", length);
 
@@ -129,7 +157,6 @@ function complete(){
     });
 }
 
-
 editor.onclick = function(){
     // 탭 비활성화
     menu.style.display = "none";
@@ -156,14 +183,10 @@ $(document).on('mouseover', '.item', function(){
  });
 $(document).on('click','.item',function(){
     if( TAB_ON == true ){
-         if(editor.innerText[editor.innerText.length-1].search(/\s/) == -1)
-             editor.innerText += " " + this.innerText;
-         else
-             editor.innerText += this.innerText;
-
-        // 커서 이동 마지막 문자로,
-        setCurrentCursorPosition(editor.innerText.length);
-
+        quill.insertText(curCursor, this.innerText)
+        curCursor += this.innerText.length;
+        setCurrentCursorPosition();
+        
         // 탭 비활성화
         menu.style.display = "none";
         idx = 0;
@@ -172,7 +195,7 @@ $(document).on('click','.item',function(){
 });
 
 auto_button.onclick = function(){
-    setCurrentCursorPosition(editor.childNodes[0].length);
+    setCurrentCursorPosition();
     complete();
 }
 
@@ -181,6 +204,7 @@ document.onkeydown = function(){
 
     // 탭을 누를 때, 5개의 추천 단어 활성화
     if(key == KEY_CODE.TAB){
+        if (!isFocus && !TAB_ON) return;
         complete();
 
         // 주소창 focus를 막기
@@ -191,30 +215,15 @@ document.onkeydown = function(){
     else if(TAB_ON == true && (key == KEY_CODE.ENTER || (key != KEY_CODE.UP && key != KEY_CODE.DOWN))){
         // ENTER 누를 때, 에디터에 해당 글자 대입
         if(key == KEY_CODE.ENTER){
-            const charList = [",", ".", "(", ")", "?", "!", "{", "}", "[", "]"];
-            let charHas = false;
             wrap_items = document.getElementsByClassName("wrap-item");
-
-            for(let i=0; i<charList.length; i++){
-                if(wrap_items[idx].innerText[0] == charList[i])
-                    charHas = true;
-            }
-            if(charHas == true){
-                editor.innerText += wrap_items[idx].innerText;
-            }
-            else{
-                if(editor.innerText[editor.innerText.length-1].search(/\s/) == -1)
-                    editor.innerText += " " + wrap_items[idx].innerText;
-                else
-                    editor.innerText += wrap_items[idx].innerText;
-            }
+            quill.insertText(curCursor, wrap_items[idx].innerText)
+            curCursor += wrap_items[idx].innerText.length;
 
             // 주소창 focus를 막기
             event.preventDefault();
         }
         // 커서 이동 마지막 문자로,
-        setCurrentCursorPosition(editor.innerText.length);
-
+        setCurrentCursorPosition();
 
         // 탭 비활성화
         menu.style.display = "none";
@@ -236,52 +245,12 @@ document.onkeydown = function(){
     }
 };
 
+function getCurrentCursorPosition() {
+    return curCursor = quill.getSelection().index;
+}
 
-function createRange(node, chars, range) {
-    if (!range) {
-        range = document.createRange()
-        range.selectNode(node);
-        range.setStart(node, 0);
-    }
-
-    if (chars.count === 0) {
-        range.setEnd(node, chars.count);
-    }
-    else if (node && chars.count > 0) {
-        if (node.nodeType === Node.TEXT_NODE) {
-            if (node.textContent.length >= chars.count) {
-                range.setEnd(node, chars.count);
-                chars.count = 0;
-            }
-        }
-        else {
-            for (var lp = 0; lp < node.childNodes.length; lp++) {
-                range = createRange(node.childNodes[lp], chars, range);
-
-                if (chars.count === 0) {
-                    break;
-                }
-            }
-        }
-    }
-
-    return range;
-};
-
-function setCurrentCursorPosition(chars) {
-    if (chars >= 0) {
-        var selection = window.getSelection();
-
-        range = createRange(editor, {
-            count: chars
-        });
-
-        if (range) {
-            range.collapse(false);
-            selection.removeAllRanges();
-            selection.addRange(range);
-        }
-    }
+function setCurrentCursorPosition() {
+    quill.setSelection(curCursor);
 };
 
 function showDescription(e){
