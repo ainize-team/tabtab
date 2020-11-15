@@ -23,9 +23,12 @@ quill.on('editor-change', function(eventName, ...args) {
     if (eventName === 'selection-change') {
         if (args[0]) {
             curCursor = args[0].index;
+            deactivateMenu()
         }
     }
 });
+const loader = document.querySelector('.loader')
+quill.container.appendChild(loader)
 
 // *************
 // Editor Focus
@@ -104,8 +107,13 @@ function complete(){
     if(select_length[0].checked == true) length = select_length[0].value;
     else if(select_length[1].checked == true) length = select_length[1].value;
 
-    let formData = new FormData();
-    let cur = getCurrentCursorPosition();
+    const formData = new FormData();
+    const cur = getCurrentCursorPosition();
+    const bounds = quill.getBounds(cur);
+    loader.style.top = `${bounds.top}px`;
+    loader.style.left = `${bounds.left}px`;
+    loader.classList.remove('hide');
+    
     formData.append("context", quill.getText(0, cur));
     formData.append("model", model);
     formData.append("length", length);
@@ -118,6 +126,7 @@ function complete(){
     )
     .then(response => {
         if ( response.status == 200 ){
+            loader.classList.add('hide')
             TAB_PRESS = false;
             return response;
         }
@@ -189,7 +198,6 @@ $(document).on('mouseover', '.item', function(){
     if( TAB_ON == true ) {
         idx = this.parentElement.tabIndex-1;
         this.focus();
-        console.log(this.parentElement)
     }
 });
 

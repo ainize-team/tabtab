@@ -1,4 +1,5 @@
 @import 'reset.css';
+@import 'loader.css';
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
 html {
@@ -240,6 +241,16 @@ p.bold {
     background: #1A1B1F;
     opacity: 0.5;
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.5);
+
+    position: relative;
+}
+
+.loader {
+    position: absolute;
+}
+
+.loader.hide {
+    display: none;
 }
 
 .focus-ring {
