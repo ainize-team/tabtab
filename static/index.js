@@ -3,14 +3,17 @@ let TAB_ON = false; // 탭 활성화
 let TAB_PRESS = false;
 
 let editor = document.getElementsByClassName("editor")[0];
-let menu = document.getElementById("menu");
-let items = document.getElementsByClassName("item");
+const menu = document.getElementById("menu");
+const items = document.getElementsByClassName("item");
+const wrap_items = document.getElementsByClassName("wrap-item");
 
 let auto_button = document.getElementsByClassName("rectangle")[0];
 
 const KEY_CODE = {"TAB" : 9, "UP" : 38, "DOWN" : 40, "ENTER" : 13, "PASTE" : 86};
 
+// *****************************
 // Quill Text editor Initialize
+// *****************************
 var options = {
     theme: null
 };
@@ -24,7 +27,9 @@ quill.on('editor-change', function(eventName, ...args) {
     }
 });
 
+// *************
 // Editor Focus
+// *************
 let isFocus = false;
 
 document.getElementById("editor").firstChild.onfocus = (e) => {
@@ -36,10 +41,14 @@ document.getElementById("editor").firstChild.onblur = (e) => {
     isFocus = false;
 };
 
+// *********************
 // Text Cursor position
+// *********************
 let curCursor = 0;
 
+// ***********
 // share link
+// ***********
 const fb = document.getElementsByClassName('footer_facebook');
 const tw = document.getElementsByClassName('footer_twitter');
 const cp = document.getElementsByClassName('footer_link');
@@ -79,6 +88,9 @@ if (cp) {
     }
 }
 
+// *************
+// auto complete
+// *************
 function complete(){
     if (TAB_PRESS == true) return;
     TAB_PRESS = true;
@@ -115,9 +127,6 @@ function complete(){
     })
     .then(response => response.json())
     .then(response => {
-        menu = document.getElementById("menu");
-        items = document.getElementsByClassName("item");
-
         // Response를 팝업 메뉴의 글씨로 설정
         for(let i=0; i<items.length; i++){
             items[i].innerHTML = response[i];
@@ -157,13 +166,6 @@ function complete(){
     });
 }
 
-editor.onclick = function(){
-    // 탭 비활성화
-    menu.style.display = "none";
-    idx = 0;
-    TAB_ON = false;
-}
-
 editor.addEventListener('paste', (event) => {
     let paste = (event.clipboardData || window.clipboardData).getData('text');
  
@@ -175,22 +177,28 @@ editor.addEventListener('paste', (event) => {
     event.preventDefault();
 });
 
+menu.addEventListener('mouseover', function(e){
+    const idx = e.target.parentElement.tabIndex - 1;
+    wrap_items[idx].focus();
+    for(let i = 0; i < wrap_items.length; i++) {
+        if (i !== idx) wrap_items[i].blur();
+    }
+})
+
 $(document).on('mouseover', '.item', function(){
     if( TAB_ON == true ) {
-         idx = this.parentElement.tabIndex-1;
-         this.focus();
+        idx = this.parentElement.tabIndex-1;
+        this.focus();
+        console.log(this.parentElement)
     }
- });
+});
+
 $(document).on('click','.item',function(){
     if( TAB_ON == true ){
         quill.insertText(curCursor, this.innerText)
         curCursor += this.innerText.length;
         setCurrentCursorPosition();
-        
-        // 탭 비활성화
-        menu.style.display = "none";
-        idx = 0;
-        TAB_ON = false;
+        deactivateMenu();
     }
 });
 
@@ -215,35 +223,34 @@ document.onkeydown = function(){
     else if(TAB_ON == true && (key == KEY_CODE.ENTER || (key != KEY_CODE.UP && key != KEY_CODE.DOWN))){
         // ENTER 누를 때, 에디터에 해당 글자 대입
         if(key == KEY_CODE.ENTER){
-            wrap_items = document.getElementsByClassName("wrap-item");
             quill.insertText(curCursor, wrap_items[idx].innerText)
-            curCursor += wrap_items[idx].innerText.length;
 
             // 주소창 focus를 막기
             event.preventDefault();
         }
-        // 커서 이동 마지막 문자로,
         setCurrentCursorPosition();
-
-        // 탭 비활성화
-        menu.style.display = "none";
-        idx = 0;
-        TAB_ON = false;
+        deactivateMenu();
     }
     // TAB 활성화 && UP 혹은 DOWN
     else if(TAB_ON == true && (key == KEY_CODE.UP || key == KEY_CODE.DOWN)){
         // 주소창 focus를 막기
         event.preventDefault();
 
-        // 해당 아이템 포커싱
-        wrap_items = document.getElementsByClassName("wrap-item");
-
         if(key == KEY_CODE.UP && idx > 0) idx--;
         else if(key == KEY_CODE.DOWN && idx < 4) idx++;
 
         wrap_items[idx].focus();
+        for(let i = 0; i < wrap_items.length; i++) {
+            if (i !== idx) wrap_items[i].blur();
+        }
     }
 };
+
+function deactivateMenu() {
+    menu.style.display = "none";
+    idx = 0;
+    TAB_ON = false;
+}
 
 function getCurrentCursorPosition() {
     return curCursor = quill.getSelection().index;
