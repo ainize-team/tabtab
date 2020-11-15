@@ -16,6 +16,13 @@ var options = {
 };
 var quill = new Quill('.editor', options);
 delete quill.getModule('keyboard').bindings["9"]
+quill.on('editor-change', function(eventName, ...args) {
+    if (eventName === 'selection-change') {
+        if (args[0]) {
+            curCursor = args[0].index;
+        }
+    }
+});
 
 // Editor Focus
 let isFocus = false;
@@ -193,12 +200,11 @@ auto_button.onclick = function(){
 }
 
 document.onkeydown = function(){
-    if (!isFocus) return;
-
     const key = event.keyCode;
 
     // 탭을 누를 때, 5개의 추천 단어 활성화
     if(key == KEY_CODE.TAB){
+        if (!isFocus && !TAB_ON) return;
         complete();
 
         // 주소창 focus를 막기
@@ -209,14 +215,7 @@ document.onkeydown = function(){
     else if(TAB_ON == true && (key == KEY_CODE.ENTER || (key != KEY_CODE.UP && key != KEY_CODE.DOWN))){
         // ENTER 누를 때, 에디터에 해당 글자 대입
         if(key == KEY_CODE.ENTER){
-            const charList = [",", ".", "(", ")", "?", "!", "{", "}", "[", "]"];
-            let charHas = false;
             wrap_items = document.getElementsByClassName("wrap-item");
-
-            for(let i=0; i<charList.length; i++){
-                if(wrap_items[idx].innerText[0] == charList[i])
-                    charHas = true;
-            }
             quill.insertText(curCursor, wrap_items[idx].innerText)
             curCursor += wrap_items[idx].innerText.length;
 
