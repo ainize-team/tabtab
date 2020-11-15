@@ -1,0 +1,51 @@
+openapi: 3.0.1
+
+info:
+  title: TabTab!
+  description: |
+    It is a service that allows you to experience various gpt2 models through the editor.
+  contact:
+    name: Ainizer - Jeong Hyunsu
+  version: "2.0"
+  license:
+    name: Apache License 2.0
+    url: https://github.com/huggingface/transformers/blob/master/LICENSE
+
+servers:
+  - url: https://kubecon-tabtab-ainize-team.endpoint.ainize.ai
+
+paths:
+  /gpt2:
+    post:
+      requestBody:
+        required: true
+        description: | 
+          Specify a length of the text and set the start prompt for the text to be generated.
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                context:
+                  type: string
+                model:
+                  type: string
+                  enum: ["gpt2-large", "gpt2-cover-letter", "gpt2-reddit", "gpt2-story", "gpt2-ads", "gpt2-business", "gpt2-film", "gpt2-trump"]
+                length:
+                  type: string
+                  enum: ["short", "long"]
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad Request
+        
+        '429':
+          description: Busy to server, please retry again.
+
+        '500':
+          description: Server side error

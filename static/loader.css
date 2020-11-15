@@ -1,0 +1,39 @@
+section {
+    width: 20px;
+}
+
+section.hide {
+    visibility: visible;
+}
+  
+.spinner {
+    animation: rotate 1.4s linear infinite;
+    -webkit-animation: rotate 1.4s linear infinite;
+    -moz-animation: rotate 1.4s linear infinite;
+    width:20px;
+    height:20px;
+    position: relative;
+}
+  
+@keyframes rotate {
+    to {
+      transform: rotate(360deg);
+    }
+}
+  
+@-webkit-keyframes rotate {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+  
+@-moz-keyframes rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+  
+.path {
+    stroke-dasharray: 170;
+    stroke-dashoffset: 100;
+}
