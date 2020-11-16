@@ -238,11 +238,13 @@ p.bold {
     word-spacing: 6px;
 
     /* dark */
-    background: #1A1B1F;
-    opacity: 0.5;
-    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.5);
+    background: rgba(26, 27, 31, 0.5);
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.2);
 
     position: relative;
+}
+.editor p {
+    opacity: 0.5;
 }
 
 .loader {
@@ -308,6 +310,8 @@ p.bold {
     z-index: 999999;
 
     line-height: 150%;
+
+    position: absolute;
 }
 
 button {   
