@@ -554,7 +554,7 @@ button:disabled {
     }
 
     #badge{
-        content: url(../static/images/ainize_button.svg);
+        content: url(../static/images/mobile_badge.svg);
         bottom: 10px; 
         right: 10px; 
     }
