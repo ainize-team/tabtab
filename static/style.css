@@ -177,12 +177,20 @@ p.bold {
     margin: 8.8px 0;
 }
 
-.choose_theme .description {
+.choose_theme .description, .choose_theme a{
+    color: #FFFFFF;
     font-size: 14px;
     line-height: 20px;
 
     opacity: 0.6;
 }
+.choose_theme a{
+    margin-top: 8px;
+}
+.choose_theme a:hover{
+    opacity: 1;
+}
+
 
 #model{
     cursor: pointer;
