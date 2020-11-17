@@ -2,29 +2,40 @@ let idx = 0; // 탭 번호
 let TAB_ON = false; // 탭 활성화
 let TAB_PRESS = false;
 
-let editor = document.getElementsByClassName("editor")[0];
+const editor = document.getElementsByClassName("editor")[0];
 const menu = document.getElementById("menu");
 const items = document.getElementsByClassName("item");
 const wrap_items = document.getElementsByClassName("wrap-item");
 
-let auto_button = document.getElementsByClassName("rectangle")[0];
+const auto_button = document.getElementsByClassName("rectangle")[0];
 
 const KEY_CODE = {"TAB" : 9, "UP" : 38, "DOWN" : 40, "ENTER" : 13, "PASTE" : 86};
 
 // *****************************
 // Quill Text editor Initialize
 // *****************************
-var options = {
-    theme: null
+const options = {
+    theme: null,
 };
-var quill = new Quill('.editor', options);
+const quill = new Quill('.editor', options);
 delete quill.getModule('keyboard').bindings["9"]
 quill.on('editor-change', function(eventName, ...args) {
     if (eventName === 'selection-change') {
         if (args[0]) {
-            curCursor = args[0].index;
-            deactivateMenu()
+            // after pasting text, move cursor to end of pasted text'
+            if (args[1] && args[2] === 'silent') {
+                if(args[0].index < args[1].index) {
+                    curCursor = args[1].index;
+                    setCurrentCursorPosition(curCursor);
+                }
+            } else if(args[0]) {
+                curCursor = args[0].index;
+            }
+            
+            deactivateMenu();
         }
+    } else if (eventName === 'text-change') {
+        setCurrentCursorPosition();
     }
 });
 const loader = document.querySelector('.loader');
@@ -64,7 +75,7 @@ if (fb) {
           +"?u="+encodeURIComponent(window.location.href)
         );
       })
-    )
+    );
   }
   
 if (tw) {
@@ -74,13 +85,13 @@ if (tw) {
                 +"&url="+encodeURIComponent(window.location.href)
             );
         })
-    )
+    );
 }
 
 if (cp) {
     Array.from(cp).forEach(
         cp => cp.addEventListener("click", copyToClipboard)
-    )
+    );
 
     function copyToClipboard() {
         let t = document.createElement("textarea");
@@ -139,7 +150,7 @@ function complete(){
     .then(response => {
         // Response를 팝업 메뉴의 글씨로 설정
         for(let i=0; i<items.length; i++){
-            items[i].innerHTML = response[i];
+            items[i].innerHTML = response[i] + '\32';
         }
 
         menu.style.display = 'unset';
@@ -156,15 +167,16 @@ function complete(){
     });
 }
 
-editor.addEventListener('paste', (event) => {
-    let paste = (event.clipboardData || window.clipboardData).getData('text');
- 
-    const selection = window.getSelection();
-    if (!selection.rangeCount) return false;
-    selection.deleteFromDocument();
-    selection.getRangeAt(0).insertNode(document.createTextNode(paste));
+// paste plane text only https://stackoverflow.com/questions/12027137/javascript-trick-for-paste-as-plain-text-in-execcommand
+editor.addEventListener('paste', (e) => {
+     // cancel paste
+     e.preventDefault();
 
-    event.preventDefault();
+     // get text representation of clipboard
+     const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+ 
+     // insert text manually
+     document.execCommand("insertHTML", false, text);
 });
 
 menu.addEventListener('mouseover', function(e){
@@ -184,7 +196,7 @@ $(document).on('mouseover', '.item', function(){
 
 $(document).on('click','.item',function(){
     if( TAB_ON == true ){
-        quill.insertText(curCursor, this.innerText)
+        quill.insertText(curCursor, this.innerText);
         curCursor += this.innerText.length;
         setCurrentCursorPosition();
         deactivateMenu();
@@ -212,8 +224,9 @@ document.onkeydown = function(){
     else if(TAB_ON == true && (key == KEY_CODE.ENTER || (key != KEY_CODE.UP && key != KEY_CODE.DOWN))){
         // ENTER 누를 때, 에디터에 해당 글자 대입
         if(key == KEY_CODE.ENTER){
-            quill.insertText(curCursor, wrap_items[idx].innerText)
-
+            // after inserting text, move cursor to end of inserted text'
+            quill.insertText(curCursor, wrap_items[idx].innerText);
+            curCursor += wrap_items[idx].innerText.length;
             // 주소창 focus를 막기
             event.preventDefault();
         }
@@ -245,6 +258,7 @@ function getCurrentCursorPosition() {
     return curCursor = quill.getSelection().index;
 }
 
+// set cursor position to curCursor variable.
 function setCurrentCursorPosition() {
     quill.setSelection(curCursor);
 };
