@@ -22,6 +22,7 @@ delete quill.getModule('keyboard').bindings["9"]
 quill.on('editor-change', function(eventName, ...args) {
     if (eventName === 'selection-change') {
         if (args[0]) {
+            // after pasting text, move cursor to end of pasted text'
             if (args[1] && args[2] === 'silent') {
                 if(args[0].index < args[1].index) {
                     curCursor = args[1].index;
