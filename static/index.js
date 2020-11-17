@@ -25,16 +25,16 @@ quill.on('editor-change', function(eventName, ...args) {
             if (args[1] && args[2] === 'silent') {
                 if(args[0].index < args[1].index) {
                     curCursor = args[1].index;
-                    setCurrentCursorPosition(curCursor)
+                    setCurrentCursorPosition(curCursor);
                 }
             } else if(args[0]) {
                 curCursor = args[0].index;
             }
             
-            deactivateMenu()
+            deactivateMenu();
         }
     } else if (eventName === 'text-change') {
-        setCurrentCursorPosition()
+        setCurrentCursorPosition();
     }
 });
 const loader = document.querySelector('.loader');
@@ -74,7 +74,7 @@ if (fb) {
           +"?u="+encodeURIComponent(window.location.href)
         );
       })
-    )
+    );
   }
   
 if (tw) {
@@ -84,13 +84,13 @@ if (tw) {
                 +"&url="+encodeURIComponent(window.location.href)
             );
         })
-    )
+    );
 }
 
 if (cp) {
     Array.from(cp).forEach(
         cp => cp.addEventListener("click", copyToClipboard)
-    )
+    );
 
     function copyToClipboard() {
         let t = document.createElement("textarea");
@@ -223,8 +223,8 @@ document.onkeydown = function(){
     else if(TAB_ON == true && (key == KEY_CODE.ENTER || (key != KEY_CODE.UP && key != KEY_CODE.DOWN))){
         // ENTER 누를 때, 에디터에 해당 글자 대입
         if(key == KEY_CODE.ENTER){
-            quill.insertText(curCursor, wrap_items[idx].innerText)
-            curCursor += wrap_items[idx].innerText.length
+            quill.insertText(curCursor, wrap_items[idx].innerText);
+            curCursor += wrap_items[idx].innerText.length;
             // 주소창 focus를 막기
             event.preventDefault();
         }
