@@ -153,9 +153,17 @@ function complete(){
             items[i].innerHTML = response[i] + '\32';
         }
 
+        // unset none of display attribute of menu
         menu.style.display = 'unset';
         menu.style.top = `${bounds.top + 16}px`;
         menu.style.left = `${bounds.left}px`;
+
+        const menuBounds = menu.getBoundingClientRect();
+        const editorBounds = editor.getBoundingClientRect();
+        if (editorBounds.right < menuBounds.right) {
+            menu.style.left = `${bounds.left - menuBounds.width}px`
+        }
+
         TAB_ON = true;
         idx = 0;
 
