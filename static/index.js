@@ -265,46 +265,37 @@ function setCurrentCursorPosition() {
 
 function showDescription(e){
     const description = document.getElementsByClassName("description")[0];
+    const description_link = document.getElementById("description_link");
 
     switch (e.value){
         case "gpt2-large":
-            description.innerHTML = "This is the basic model in GPT-2." + 
-            "<br><br><a href='https://ainize.ai/Jeong-Hyun-Su/gpt2-large' style='color: #FFFFFF;'>https://ainize.ai/Jeong-Hyun-Su/gpt2-large</a>";
+            description.innerHTML = "The GPT2-Large model generates the sentence.";
+            description_link.style.href = 'https://ainize.ai/Jeong-Hyun-Su/gpt2-large';
+            description_link.innerText = 'https://ainize.ai/Jeong-Hyun-Su/gpt2-large';
             break;
 
         case "gpt2-cover-letter":
-            description.innerHTML = "generate cover-letter sentence based fine-tuned gpt2 model" + 
-            "<br><br><a href='https://ainize.ai/Jeong-Hyun-Su/gpt2-cover-letter' style='color: #FFFFFF;'>https://ainize.ai/Jeong-Hyun-Su/gpt2-cover-letter</a>";
+            description.innerHTML = "The GPT2-Cover-Letter model generates cover letter style sentence.";
+            description_link.href = 'https://ainize.ai/Jeong-Hyun-Su/gpt2-cover-letter';
+            description_link.innerText = 'https://ainize.ai/Jeong-Hyun-Su/gpt2-cover-letter';
             break;
 
         case "gpt2-reddit":
-            description.innerHTML = "GPT2-reddit is trained by reddit data and generate words and sentences like community posts." +
-            "<br><br><a href='https://ainize.ai/woomurf/gpt2-reddit' style='color: #FFFFFF;'>https://ainize.ai/woomurf/gpt2-reddit</a>";
+            description.innerHTML = "The GPT2-Reddit model generates reddit style sentence.";
+            description_link.href = 'https://ainize.ai/woomurf/gpt2-reddit';
+            description_link.innerText = 'https://ainize.ai/woomurf/gpt2-reddit';
             break;
 
         case "gpt2-story":
-            description.innerHTML = "This GPT2-story model generates genre story text. When you enter text at the beginning of the story, the model gives you the rest of the story as long as you want." +
-            "<br><br><a href='https://ainize.ai/gmlee329/gpt2_story' style='color: #FFFFFF;'>https://ainize.ai/gmlee329/gpt2_story</a>";
-            break;
-
-        case "gpt2-ads":
-            description.innerHTML = "GPT-2 model that has been Fine Tuned to generate an advertisement." + 
-            "<br><br><a href='https://ainize.ai/psi1104/gpt2-ads' style='color: #FFFFFF;'>https://ainize.ai/psi1104/gpt2-ads</a>";
-            break;
-
-        case "gpt2-film":
-            description.innerHTML = "This GPT2-film model generates film script text. When you enter text for the beginning of the film script, the model gives you the rest of the film script as long as you want." +
-            "<br><br><a href='https://ainize.ai/gmlee329/gpt2_film' style='color: #FFFFFF;'>https://ainize.ai/gmlee329/gpt2_film</a>";
-            break;
-
-        case "gpt2-business":
-            description.innerHTML = "business style GPT2 model" + 
-            "<br><br><a href='https://ainize.ai/leesangha/gpt2-business' style='color: #FFFFFF;'>https://ainize.ai/leesangha/gpt2-business</a>";
+            description.innerHTML = "The GPT2-Story model generates story style sentence.";
+            description_link.href = 'https://ainize.ai/gmlee329/gpt2_story';
+            description_link.innerText = 'https://ainize.ai/gmlee329/gpt2_story';
             break;
 
         case "gpt2-trump":
-            description.innerHTML = "This GPT2-trump model generates Donald trump’s tweets style text. When you enter text for the beginning of the tweets, the model gives you the rest of the tweets as long as you want." +
-            "<br><br><a href='https://ainize.ai/gmlee329/gpt2_trump' style='color: #FFFFFF;'>https://ainize.ai/gmlee329/gpt2_trump</a>";
+            description.innerHTML = "This GPT2-trump model generates Donald trump’s tweets style sentence.";
+            description_link.href = 'https://ainize.ai/gmlee329/gpt2_trump';
+            description_link.innerText = 'https://ainize.ai/gmlee329/gpt2_trump';
             break;
     }
 }
