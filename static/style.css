@@ -63,7 +63,7 @@ p.bold {
     font-weight: bold;
 }
 
-.header{
+.header {
     position: fixed;
     width: 100%;
     top: 0;
@@ -140,7 +140,7 @@ p.bold {
     padding: 0 6px 0 6px;
 }
 
-.contents{
+.contents {
     display: flex;
     flex-direction: row;
     
@@ -177,21 +177,21 @@ p.bold {
     margin: 8.8px 0;
 }
 
-.choose_theme .description, .choose_theme a{
+.choose_theme .description, .choose_theme a {
     color: #FFFFFF;
     font-size: 14px;
     line-height: 20px;
 
     opacity: 0.6;
 }
-.choose_theme a{
+.choose_theme a {
     margin-top: 8px;
 }
-.choose_theme a:hover{
+.choose_theme a:hover {
     opacity: 1;
 }
 
-#model{
+#model {
     border: 0 !important;
     background-color: #3A3A3A;
     
@@ -205,10 +205,10 @@ p.bold {
     
     border-radius: .7em;
 }
-#model:hover{
+#model:hover {
     cursor: pointer;
 }
-#model:focus{
+#model:focus {
     outline-color: #A56BEE;
 }
 .select {
@@ -252,7 +252,7 @@ p.bold {
 .or {
     margin: 20px 10px;
 }
-.tab_text, .tab_text p{
+.tab_text, .tab_text p {
     display: inline;
     margin-top: 15px;
     font-size: 13px;
@@ -261,7 +261,7 @@ p.bold {
 .tab_text p{
      color:#A56BEE;
 }
-.tab_icon{
+.tab_icon {
     margin-top: 21px;
 }
 
@@ -385,7 +385,7 @@ button:disabled {
     position: relative;
 }
 
-.footer_link:hover img{
+.footer_link:hover img {
     content: url(../static/images/footer_link_hover.svg);
 }
 
@@ -420,10 +420,10 @@ button:disabled {
     visibility: visible;
 }
 
-.footer_facebook:hover img{
+.footer_facebook:hover img {
     content: url(../static/images/footer_facebook_hover.svg);
 }
-.footer_twitter:hover img{
+.footer_twitter:hover img {
     content: url(../static/images/footer_twitter_hover.svg);
 }
 
@@ -454,7 +454,7 @@ button:disabled {
     margin-right: 5.5px;
 }
 
-#badge{
+#badge {
     position: fixed; 
     bottom: 40px; 
     right: 40px; 
@@ -478,7 +478,7 @@ button:disabled {
     transition: ease .2s;
 }
 
-#menu li:focus, #menu li:hover{
+#menu li:focus, #menu li:hover {
     background: #808080;
     border-left: 3px solid #606060;
 }
@@ -553,7 +553,7 @@ button:disabled {
     .choose_type {
         width: 100%;
     }
-    .setting{
+    .setting {
         display: flex;
         flex-direction: column;
         margin: 30px;
@@ -572,7 +572,7 @@ button:disabled {
         left:20px;
     }
     
-    .editor{
+    .editor {
         width: unset;
         padding: 25px;
         height: 500px;
@@ -592,7 +592,7 @@ button:disabled {
         margin: 8px 0;
     }
 
-    #badge{
+    #badge {
         content: url(../static/images/ainize_button.svg);
         bottom: 10px; 
         right: 10px; 

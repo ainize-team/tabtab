@@ -249,40 +249,39 @@ function setCurrentCursorPosition() {
     quill.setSelection(curCursor);
 };
 
-
 function showDescription(e){
     const description = document.getElementsByClassName("description")[0];
-    const descript_a = document.getElementById("descript_a");
+    const description_link = document.getElementById("description_link");
 
     switch (e.value){
         case "gpt2-large":
             description.innerHTML = "The GPT2-Large model generates the sentence.";
-            descript_a.style.href = 'https://ainize.ai/Jeong-Hyun-Su/gpt2-large';
-            descript_a.innerText = 'https://ainize.ai/Jeong-Hyun-Su/gpt2-large';
+            description_link.style.href = 'https://ainize.ai/Jeong-Hyun-Su/gpt2-large';
+            description_link.innerText = 'https://ainize.ai/Jeong-Hyun-Su/gpt2-large';
             break;
 
         case "gpt2-cover-letter":
             description.innerHTML = "The GPT2-Cover-Letter model generates cover letter style sentence.";
-            descript_a.href = 'https://ainize.ai/Jeong-Hyun-Su/gpt2-cover-letter';
-            descript_a.innerText = 'https://ainize.ai/Jeong-Hyun-Su/gpt2-cover-letter';
+            description_link.href = 'https://ainize.ai/Jeong-Hyun-Su/gpt2-cover-letter';
+            description_link.innerText = 'https://ainize.ai/Jeong-Hyun-Su/gpt2-cover-letter';
             break;
 
         case "gpt2-reddit":
             description.innerHTML = "The GPT2-Reddit model generates reddit style sentence.";
-            descript_a.href = 'https://ainize.ai/woomurf/gpt2-reddit';
-            descript_a.innerText = 'https://ainize.ai/woomurf/gpt2-reddit';
+            description_link.href = 'https://ainize.ai/woomurf/gpt2-reddit';
+            description_link.innerText = 'https://ainize.ai/woomurf/gpt2-reddit';
             break;
 
         case "gpt2-story":
             description.innerHTML = "The GPT2-Story model generates story style sentence.";
-            descript_a.href = 'https://ainize.ai/gmlee329/gpt2_story';
-            descript_a.innerText = 'https://ainize.ai/gmlee329/gpt2_story';
+            description_link.href = 'https://ainize.ai/gmlee329/gpt2_story';
+            description_link.innerText = 'https://ainize.ai/gmlee329/gpt2_story';
             break;
 
         case "gpt2-trump":
             description.innerHTML = "This GPT2-trump model generates Donald trump’s tweets style sentence.";
-            descript_a.href = 'https://ainize.ai/gmlee329/gpt2_trump';
-            descript_a.innerText = 'https://ainize.ai/gmlee329/gpt2_trump';
+            description_link.href = 'https://ainize.ai/gmlee329/gpt2_trump';
+            description_link.innerText = 'https://ainize.ai/gmlee329/gpt2_trump';
             break;
     }
 }
