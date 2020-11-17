@@ -150,7 +150,7 @@ function complete(){
     .then(response => {
         // Response를 팝업 메뉴의 글씨로 설정
         for(let i=0; i<items.length; i++){
-            items[i].innerHTML = response[i];
+            items[i].innerHTML = response[i] + '\32';
         }
 
         menu.style.display = 'unset';
@@ -197,7 +197,6 @@ $(document).on('mouseover', '.item', function(){
 $(document).on('click','.item',function(){
     if( TAB_ON == true ){
         quill.insertText(curCursor, this.innerText);
-        quill.insertText(curCursor, ' ');
         curCursor += this.innerText.length;
         setCurrentCursorPosition();
         deactivateMenu();
