@@ -15,16 +15,27 @@ const KEY_CODE = {"TAB" : 9, "UP" : 38, "DOWN" : 40, "ENTER" : 13, "PASTE" : 86}
 // Quill Text editor Initialize
 // *****************************
 var options = {
-    theme: null
+    theme: null,
+    // debug: 'info'
 };
 var quill = new Quill('.editor', options);
 delete quill.getModule('keyboard').bindings["9"]
 quill.on('editor-change', function(eventName, ...args) {
     if (eventName === 'selection-change') {
         if (args[0]) {
-            curCursor = args[0].index;
+            if (args[1] && args[2] === 'silent') {
+                if(args[0].index < args[1].index) {
+                    curCursor = args[1].index;
+                    setCurrentCursorPosition(curCursor)
+                }
+            } else if(args[0]) {
+                curCursor = args[0].index;
+            }
+            
             deactivateMenu()
         }
+    } else if (eventName === 'text-change') {
+        setCurrentCursorPosition()
     }
 });
 const loader = document.querySelector('.loader');
@@ -156,15 +167,16 @@ function complete(){
     });
 }
 
-editor.addEventListener('paste', (event) => {
-    let paste = (event.clipboardData || window.clipboardData).getData('text');
- 
-    const selection = window.getSelection();
-    if (!selection.rangeCount) return false;
-    selection.deleteFromDocument();
-    selection.getRangeAt(0).insertNode(document.createTextNode(paste));
+// paste plane text only https://stackoverflow.com/questions/12027137/javascript-trick-for-paste-as-plain-text-in-execcommand
+editor.addEventListener('paste', (e) => {
+     // cancel paste
+     e.preventDefault();
 
-    event.preventDefault();
+     // get text representation of clipboard
+     var text = (e.originalEvent || e).clipboardData.getData('text/plain');
+ 
+     // insert text manually
+     document.execCommand("insertHTML", false, text);
 });
 
 menu.addEventListener('mouseover', function(e){
@@ -184,7 +196,8 @@ $(document).on('mouseover', '.item', function(){
 
 $(document).on('click','.item',function(){
     if( TAB_ON == true ){
-        quill.insertText(curCursor, this.innerText)
+        quill.insertText(curCursor, this.innerText);
+        quill.insertText(curCursor, ' ');
         curCursor += this.innerText.length;
         setCurrentCursorPosition();
         deactivateMenu();
