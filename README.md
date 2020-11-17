@@ -15,7 +15,7 @@ Now the server is available at http://localhost.
 ## How to use it?
 Select a theme, Write your text in a text editor.
 
-f you can't come up with something to write while writing, press the Tab button to get recommendations.
+If you can't come up with something to write while writing, press the Tab button to get recommendations.
 
 Select the Short button if you want to recommend a few words, or the long button if you want a long sentence without an idea at all.
 
