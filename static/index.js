@@ -2,22 +2,22 @@ let idx = 0; // 탭 번호
 let TAB_ON = false; // 탭 활성화
 let TAB_PRESS = false;
 
-let editor = document.getElementsByClassName("editor")[0];
+const editor = document.getElementsByClassName("editor")[0];
 const menu = document.getElementById("menu");
 const items = document.getElementsByClassName("item");
 const wrap_items = document.getElementsByClassName("wrap-item");
 
-let auto_button = document.getElementsByClassName("rectangle")[0];
+const auto_button = document.getElementsByClassName("rectangle")[0];
 
 const KEY_CODE = {"TAB" : 9, "UP" : 38, "DOWN" : 40, "ENTER" : 13, "PASTE" : 86};
 
 // *****************************
 // Quill Text editor Initialize
 // *****************************
-var options = {
+const options = {
     theme: null,
 };
-var quill = new Quill('.editor', options);
+const quill = new Quill('.editor', options);
 delete quill.getModule('keyboard').bindings["9"]
 quill.on('editor-change', function(eventName, ...args) {
     if (eventName === 'selection-change') {
@@ -173,7 +173,7 @@ editor.addEventListener('paste', (e) => {
      e.preventDefault();
 
      // get text representation of clipboard
-     var text = (e.originalEvent || e).clipboardData.getData('text/plain');
+     const text = (e.originalEvent || e).clipboardData.getData('text/plain');
  
      // insert text manually
      document.execCommand("insertHTML", false, text);
@@ -224,6 +224,7 @@ document.onkeydown = function(){
     else if(TAB_ON == true && (key == KEY_CODE.ENTER || (key != KEY_CODE.UP && key != KEY_CODE.DOWN))){
         // ENTER 누를 때, 에디터에 해당 글자 대입
         if(key == KEY_CODE.ENTER){
+            // after inserting text, move cursor to end of inserted text'
             quill.insertText(curCursor, wrap_items[idx].innerText);
             curCursor += wrap_items[idx].innerText.length;
             // 주소창 focus를 막기
@@ -257,6 +258,7 @@ function getCurrentCursorPosition() {
     return curCursor = quill.getSelection().index;
 }
 
+// set cursor position to curCursor variable.
 function setCurrentCursorPosition() {
     quill.setSelection(curCursor);
 };
