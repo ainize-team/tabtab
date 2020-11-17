@@ -16,7 +16,6 @@ const KEY_CODE = {"TAB" : 9, "UP" : 38, "DOWN" : 40, "ENTER" : 13, "PASTE" : 86}
 // *****************************
 var options = {
     theme: null,
-    // debug: 'info'
 };
 var quill = new Quill('.editor', options);
 delete quill.getModule('keyboard').bindings["9"]
@@ -225,7 +224,7 @@ document.onkeydown = function(){
         // ENTER 누를 때, 에디터에 해당 글자 대입
         if(key == KEY_CODE.ENTER){
             quill.insertText(curCursor, wrap_items[idx].innerText)
-
+            curCursor += wrap_items[idx].innerText.length
             // 주소창 focus를 막기
             event.preventDefault();
         }
