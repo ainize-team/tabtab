@@ -542,13 +542,13 @@ button:disabled {
     }
 
     
-    .title .link :nth-child(1) {
+    .title .link a:nth-child(1) {
         order: 2;
     }
-    .title .link :nth-child(2) {
+    .title .link a:nth-child(2) {
         order: 1;
     }
-    .title .link :nth-child(3) {
+    .title .link a:nth-child(3) {
         order: 1;
     }
     .title .header_div h1 {
