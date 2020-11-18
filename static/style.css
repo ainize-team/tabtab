@@ -588,8 +588,9 @@ button:disabled {
         position:fixed;
         z-index: 2;
 
-        bottom:20px;
-        left:20px;
+        left: 50%;
+        transform:translateX(-50%);
+        bottom: 40px;
     }
     
     .editor {
