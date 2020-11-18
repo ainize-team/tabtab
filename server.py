@@ -10,7 +10,7 @@ models = {
     "gpt2-large": "http://main-gpt2-large-jeong-hyun-su.endpoint.ainize.ai/",
     "gpt2-cover-letter": "http://main-gpt2-cover-letter-jeong-hyun-su.endpoint.ainize.ai/",
     "gpt2-story": "http://main-gpt2-story-gmlee329.endpoint.ainize.ai/",
-    "gpt2-film": "http://main-gpt2-film-gmlee329.endpoint.ainize.ai/",
+    "gpt2-reddit": "https://master-gpt2-reddit-woomurf.endpoint.ainize.ai/",
     "gpt2-trump": "http://main-gpt2-trump-gmlee329.endpoint.ainize.ai/"
 }
 
