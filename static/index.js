@@ -150,7 +150,7 @@ function complete(){
     .then(response => {
         // Response를 팝업 메뉴의 글씨로 설정
         for(let i=0; i<items.length; i++){
-            items[i].innerHTML = response[i] + '\40';
+            items[i].innerHTML = response[i];
         }
 
         // unset none of display attribute of menu
@@ -206,6 +206,8 @@ $(document).on('click','.item',function(){
     if( TAB_ON == true ){
         quill.insertText(curCursor, this.innerText);
         curCursor += this.innerText.length;
+        quill.insertText(curCursor, ' ');
+        curCursor ++;
         setCurrentCursorPosition();
         deactivateMenu();
     }
@@ -235,6 +237,8 @@ document.onkeydown = function(){
             // after inserting text, move cursor to end of inserted text'
             quill.insertText(curCursor, wrap_items[idx].innerText);
             curCursor += wrap_items[idx].innerText.length;
+            quill.insertText(curCursor, ' ');
+            curCursor ++;
             // 주소창 focus를 막기
             event.preventDefault();
         }

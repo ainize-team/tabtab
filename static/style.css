@@ -311,6 +311,7 @@ p.bold {
 
 
 .ql-editor {
+    white-space: pre-wrap!important;
     outline: none;
     height: 90%;
 }
