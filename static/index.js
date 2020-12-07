@@ -150,7 +150,7 @@ function complete(){
     .then(response => {
         // Response를 팝업 메뉴의 글씨로 설정
         for(let i=0; i<items.length; i++){
-            items[i].innerHTML = response[i] + '\32';
+            items[i].innerHTML = response[i] + '\40';
         }
 
         // unset none of display attribute of menu
