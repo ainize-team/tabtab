@@ -110,6 +110,8 @@ function complete(){
     if (TAB_PRESS == true) return;
     TAB_PRESS = true;
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const modelUrl = urlParams.get('modelUrl');
     const select_model = document.getElementById("model");
     const model = select_model.options[select_model.selectedIndex].value;
 
@@ -127,10 +129,18 @@ function complete(){
     loader.classList.remove('hide');
     
     formData.append("context", quill.getText(0, cur));
-    formData.append("model", model);
     formData.append("length", length);
 
-    fetch("/gpt2",
+    let post_path = '';
+    if (modelUrl) {
+        post_path = 'url';
+        formData.append("model", modelUrl);
+    } else {
+        post_path = 'gpt2';
+        formData.append("model", model);
+    }
+
+    fetch(post_path,
         {
             method: "POST",
             body: formData,
