@@ -3,6 +3,7 @@ import requests
 import time
 import random
 import json
+import os
 
 from transformers import AutoTokenizer
 
@@ -12,13 +13,14 @@ autoTokenizer = AutoTokenizer.from_pretrained("gpt2-large")
 app = Flask(__name__, static_url_path='/static')
 
 models = {
-    "gpt2-large": "http://main-gpt2-large-jeong-hyun-su.endpoint.ainize.ai/",
-    "gpt2-cover-letter": "http://main-gpt2-cover-letter-jeong-hyun-su.endpoint.ainize.ai/",
-    "gpt2-story": "http://main-gpt2-story-gmlee329.endpoint.ainize.ai/",
-    "gpt2-reddit": "https://master-gpt2-reddit-woomurf.endpoint.ainize.ai/",
-    "gpt2-trump": "http://main-gpt2-trump-gmlee329.endpoint.ainize.ai/"
+    "gpt2-large": "gpt2-large", 
+    "gpt2-cover-letter": "cover-letter-gpt2",
+    "gpt2-story": "gpt2_story",
+    "gpt2-reddit": "gpt2_reddit",
+    "gpt2-trump": "gpt2_trump"
 }
 
+SERVER_URL = os.environ.get('GPT2_SERVER_URL')
 
 @app.route("/url", methods=['POST'])
 def gpt2_url():
@@ -54,30 +56,28 @@ def gpt2():
         context = request.form['context']
         model = request.form['model']
         length = request.form['length']
-
     except Exception:
         print("Empty Text")
         return Response("fail", status=400)
 
-    url = models[model] + model + "/long"
+    url = SERVER_URL + models[model]
+
+    data = None
+    headers = {'Content-Type': 'application/json'}
 
     if length == 'short':
         times = random.randrange(2, 6)
         data = {"text": context, "num_samples": 5, "length": times}
-
     elif length == 'long':
         data = {"text": context, "num_samples": 5, "length": 20}
 
     count = 0
     while True:
-        response = requests.post(url, data=data)
-
+        response = requests.post(url, headers=headers, data=json.dumps(data))
         if response.status_code == 200:
             res = response.json()
-            print(type(res))
-            for i in range(5):
-                res[str(i)] = res[str(i)].strip()
-            print(type(res))
+            for key, val in res.items():
+                res[key] = res[key][len(context) + 1:]
             return res
 
         # 3초 초과 or 400 status 종료
@@ -103,7 +103,5 @@ def healthCheck():
 
 
 if __name__ == "__main__":
-    from waitress import serve
-    # app.debug = True
-    serve(app, host='0.0.0.0', port=80)   
-    # app.run(port=8080)
+    app.run(host='0.0.0.0', port=80, threaded=True)
+
