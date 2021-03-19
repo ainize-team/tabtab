@@ -9,6 +9,22 @@ const wrap_items = document.getElementsByClassName("wrap-item");
 
 const auto_button = document.getElementsByClassName("rectangle")[0];
 
+const curModel = document.getElementById('model');
+
+const urlParams = new URLSearchParams(window.location.search);
+const modelUrl = urlParams.get('modelUrl');
+
+if (modelUrl) {
+    const modelName = /[^/]*$/.exec(modelUrl)[0];
+    const newOption = document.createElement('option');
+    newOption.selected = "selected";
+    newOption.value = `custom-${modelName}`;
+    newOption.innerHTML = modelName;
+
+    curModel.appendChild(newOption);
+    newOption.click();
+}
+
 const KEY_CODE = {"TAB" : 9, "UP" : 38, "DOWN" : 40, "ENTER" : 13, "PASTE" : 86};
 
 // *****************************
@@ -110,8 +126,6 @@ function complete(){
     if (TAB_PRESS == true) return;
     TAB_PRESS = true;
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const modelUrl = urlParams.get('modelUrl');
     const select_model = document.getElementById("model");
     const model = select_model.options[select_model.selectedIndex].value;
 
@@ -132,7 +146,7 @@ function complete(){
     formData.append("length", length);
 
     let post_path = '';
-    if (modelUrl) {
+    if (model.startsWith('custom-')) {
         post_path = 'url';
         formData.append("model", modelUrl);
     } else {

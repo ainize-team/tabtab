@@ -27,15 +27,21 @@ def gpt2_url():
     try:
         context = request.form['context']
         model_url = request.form['model']
-        print(model_url)
+        length_form = request.form['length']
     except Exception:
         print("Empty Text")
         return Response("fail", status=400)
 
+    if length_form == 'short':
+        times = random.randrange(2, 6)
+        length = times
+    elif length_form == 'long':
+        length = 20
+
     encodedText = autoTokenizer.encode(context)
 
     headers = {'Content-Type': 'application/json; charset=utf-8'}
-    data = {"text": encodedText, "num_samples": 5, "length": 20}
+    data = {"text": encodedText, "num_samples": 5, "length": length}
     response = requests.post(model_url, headers=headers, data=json.dumps(data))
     if response.status_code == 200:
         result = dict()
