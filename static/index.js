@@ -13,7 +13,15 @@ const curModel = document.getElementById('model');
 
 const urlParams = new URLSearchParams(window.location.search);
 const modelUrl = urlParams.get('modelUrl');
+const text = urlParams.get('text');
 
+if (text) {
+    document.getElementById('editor').innerText = decodeURIComponent(text);
+} else {
+    document.getElementById('editor').innerText = "Ainize is a launchpad for open-source projects. \
+    Programming code is merely a text unless it is allocated with proper computing resources. \
+    Ainize is about bringing Open-source projects to life by turning them into instantly executable services or APIs. ✨"
+}
 if (modelUrl) {
     const modelName = /[^/]*$/.exec(modelUrl)[0];
     const newOption = document.createElement('option');
