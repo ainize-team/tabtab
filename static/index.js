@@ -21,7 +21,7 @@ if (text) {
     document.getElementById('editor').innerText = 
 `Ainize is a launchpad for open-source projects.\n\
 Programming code is merely a text unless it is allocated with proper computing resources.\n\
-Ainize is about bringing Open-source projects to life by turning them into instantly executable services or APIs. ✨\n`;
+Ainize is about bringing Open-source projects to life by turning them into instantly executable services or APIs.\n`;
 
 }
 if (modelUrl) {
