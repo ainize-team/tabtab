@@ -66,7 +66,7 @@ def gpt2():
         print("Empty Text")
         return Response("fail", status=400)
 
-    url = SERVER_URL + models[model]
+    url = os.path.join(SERVER_URL, models[model])
 
     data = None
     headers = {'Content-Type': 'application/json'}
@@ -109,5 +109,5 @@ def healthCheck():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=80, threaded=True)
+    app.run(debug=True, host='0.0.0.0', port=80, threaded=True)
 
