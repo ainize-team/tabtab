@@ -13,7 +13,7 @@ autoTokenizer = AutoTokenizer.from_pretrained("gpt2-large")
 app = Flask(__name__, static_url_path='/static')
 
 models = {
-    "gpt2-large": "gpt2-large", 
+    "gpt2-large": "gpt2-large",
     "gpt2-cover-letter": "cover-letter-gpt2",
     "gpt2-story": "gpt2_story",
     "gpt2-reddit": "gpt2_reddit",
@@ -49,7 +49,7 @@ def gpt2_url():
         res = response.json()
         for idx, sampleOutput in enumerate(res):
             result[idx] = autoTokenizer.decode(
-                sampleOutput, skip_special_tokens=True)[len(context) + 1:]
+                sampleOutput, skip_special_tokens=True)[len(context):]
         return result
 
     else:
@@ -83,7 +83,8 @@ def gpt2():
         if response.status_code == 200:
             res = response.json()
             for key, val in res.items():
-                res[key] = res[key][len(context) + 1:]
+                res[key] = res[key][len(context):]
+                print(res[key])
             return res
 
         # 3초 초과 or 400 status 종료

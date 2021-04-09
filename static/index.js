@@ -18,7 +18,7 @@ const text = urlParams.get('text');
 if (text) {
     document.getElementById('editor').innerText = decodeURIComponent(text);
 } else {
-    document.getElementById('editor').innerText = 
+    document.getElementById('editor').innerText =
 `Ainize is a launchpad for open-source projects.\n\
 Programming code is merely a text unless it is allocated with proper computing resources.\n\
 Ainize is about bringing Open-source projects to life by turning them into instantly executable services or APIs.\n`;
@@ -46,21 +46,25 @@ const options = {
 const quill = new Quill('.editor', options);
 delete quill.getModule('keyboard').bindings["9"]
 quill.on('editor-change', function(eventName, ...args) {
+    console.log(args)
     if (eventName === 'selection-change') {
         if (args[0]) {
+            console.log(1)
             // after pasting text, move cursor to end of pasted text'
             if (args[1] && args[2] === 'silent') {
-                if(args[0].index < args[1].index) {
-                    curCursor = args[1].index;
-                    setCurrentCursorPosition(curCursor);
+                if(args[0].index > args[1].index) {
+                    curCursor = args[0].index;
+                    // setCurrentCursorPosition(curCursor);
                 }
-            } else if(args[0]) {
-                curCursor = args[0].index;
             }
-            
+            // else if(args[0]) {
+            //     curCursor = args[0].index;
+            // }
+
             deactivateMenu();
         }
     } else if (eventName === 'text-change') {
+        console.log(2)
         setCurrentCursorPosition();
     }
 });
@@ -103,7 +107,7 @@ if (fb) {
       })
     );
   }
-  
+
 if (tw) {
     Array.from(tw).forEach(
         tw => tw.addEventListener("click", () => {
@@ -151,7 +155,7 @@ function complete(){
     loader.style.top = `${bounds.top}px`;
     loader.style.left = `${bounds.left}px`;
     loader.classList.remove('hide');
-    
+
     formData.append("context", quill.getText(0, cur));
     formData.append("length", length);
 
@@ -183,9 +187,13 @@ function complete(){
     })
     .then(response => response.json())
     .then(response => {
+        console.log(response);
         // Response를 팝업 메뉴의 글씨로 설정
         for(let i=0; i<items.length; i++){
-            items[i].innerHTML = response[i];
+            // if (response[i] && response[i].startsWith(" ")) {
+            //     response[i] = "&nbsp;"response[i];
+            // }
+            items[i].innerText = response[i].replace('\n', '↵');
         }
 
         // unset none of display attribute of menu
@@ -217,7 +225,7 @@ editor.addEventListener('paste', (e) => {
 
      // get text representation of clipboard
      const text = (e.originalEvent || e).clipboardData.getData('text/plain');
- 
+
      // insert text manually
      document.execCommand("insertHTML", false, text);
 });
@@ -239,10 +247,10 @@ $(document).on('mouseover', '.item', function(){
 
 $(document).on('click','.item',function(){
     if( TAB_ON == true ){
-        quill.insertText(curCursor, this.innerText);
+        quill.insertText(curCursor, this.innerText.replace('↵', '\n'));
         curCursor += this.innerText.length;
-        quill.insertText(curCursor, ' ');
-        curCursor ++;
+        // quill.insertText(curCursor, ' ');
+        // curCursor ++;
         setCurrentCursorPosition();
         deactivateMenu();
     }
@@ -270,10 +278,10 @@ document.onkeydown = function(){
         // ENTER 누를 때, 에디터에 해당 글자 대입
         if(key == KEY_CODE.ENTER){
             // after inserting text, move cursor to end of inserted text'
-            quill.insertText(curCursor, wrap_items[idx].innerText);
+            quill.insertText(curCursor, wrap_items[idx].innerText.replace('↵', '\n'));
             curCursor += wrap_items[idx].innerText.length;
-            quill.insertText(curCursor, ' ');
-            curCursor ++;
+            // quill.insertText(curCursor, ' ');
+            // curCursor ++;
             // 주소창 focus를 막기
             event.preventDefault();
         }

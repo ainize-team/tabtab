@@ -117,7 +117,7 @@ p.bold {
 
     border: 1px solid #606060;
     border-radius: 25px;
-    
+
     margin: 6px;
     cursor: pointer;
 
@@ -152,7 +152,7 @@ p.bold {
 .contents {
     display: flex;
     flex-direction: row;
-    
+
     max-width: 1280px;
     height: 800px;
     margin: 160px auto 0 auto;
@@ -203,7 +203,6 @@ p.bold {
 #model {
     border: 0 !important;
     background-color: #3A3A3A;
-    
 
     display: flex;
     overflow: hidden;
@@ -211,7 +210,6 @@ p.bold {
     width: 100%;
     height: 35px;
     padding-left: 0.9em;
-    
     border-radius: .7em;
 }
 #model:hover {
@@ -228,7 +226,6 @@ p.bold {
     width: 60%;
     line-height: 2;
     border-radius: .5em;
-    
     outline: #FFFFFF 10px;
 
     filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.5));
@@ -242,7 +239,6 @@ p.bold {
     right: 0;
     padding: 0 14px;
     border-radius: .25em;
-    
     background:  #3A3A3A;
     pointer-events: none;
 }
@@ -277,7 +273,7 @@ p.bold {
 .editor {
     width: 100%;
 
-    padding: 50px 50px; 
+    padding: 50px 50px;
     border: 1px solid black;
 
     font-size: 16px;
@@ -324,7 +320,6 @@ p.bold {
     display: flex;
     flex-direction: column;
     align-items: center;
-    
     margin-top: 64px;
 }
 
@@ -364,7 +359,7 @@ p.bold {
     position: absolute;
 }
 
-button {   
+button {
     cursor: pointer;
     height: 60px;
     width: 202px;
@@ -466,10 +461,10 @@ button:disabled {
 }
 
 #badge {
-    position: fixed; 
-    bottom: 40px; 
-    right: 40px; 
-    filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25)); 
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25));
     cursor:pointer;
 }
 
@@ -487,6 +482,7 @@ button:disabled {
 
     text-decoration: none;
     transition: ease .2s;
+    white-space: pre-wrap;
 }
 
 #menu li:focus, #menu li:hover {
@@ -513,7 +509,7 @@ button:disabled {
     }
 
     .title .header_div {
-        order: 2; 
+        order: 2;
         flex-direction: column;
         width: 80%;
     }
@@ -542,7 +538,7 @@ button:disabled {
         margin: 6px 0 6px 0;
     }
 
-    
+
     .title .link a:nth-child(1) {
         order: 2;
     }
@@ -556,7 +552,7 @@ button:disabled {
         font-size: 24px;
         line-height: 36px;
     }
-    
+
     .title .header_div p {
         font-size: 14px;
         line-height: 20px;
@@ -579,7 +575,7 @@ button:disabled {
         flex-direction: column;
         margin: 30px;
     }
-    
+
     .trigger {
         visibility: hidden;
     }
@@ -593,7 +589,7 @@ button:disabled {
         transform:translateX(-50%);
         bottom: 40px;
     }
-    
+
     .editor {
         width: unset;
         padding: 25px;
@@ -609,14 +605,14 @@ button:disabled {
         align-items: center;
         margin: 14px 0 100px 0;
     }
-    
+
     .share_link a {
         margin: 8px 0;
     }
 
     #badge {
         content: url(../static/images/mobile_badge.svg);
-        bottom: 10px; 
-        right: 10px; 
+        bottom: 10px;
+        right: 10px;
     }
 }
