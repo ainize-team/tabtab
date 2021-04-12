@@ -46,10 +46,8 @@ const options = {
 const quill = new Quill('.editor', options);
 delete quill.getModule('keyboard').bindings["9"]
 quill.on('editor-change', function(eventName, ...args) {
-    console.log(args)
     if (eventName === 'selection-change') {
         if (args[0]) {
-            console.log(1)
             // after pasting text, move cursor to end of pasted text'
             if (args[1] && args[2] === 'silent') {
                 if(args[0].index > args[1].index) {
@@ -64,7 +62,6 @@ quill.on('editor-change', function(eventName, ...args) {
             deactivateMenu();
         }
     } else if (eventName === 'text-change') {
-        console.log(2)
         setCurrentCursorPosition();
     }
 });
@@ -187,7 +184,6 @@ function complete(){
     })
     .then(response => response.json())
     .then(response => {
-        console.log(response);
         // Response를 팝업 메뉴의 글씨로 설정
         for(let i=0; i<items.length; i++){
             // if (response[i] && response[i].startsWith(" ")) {
