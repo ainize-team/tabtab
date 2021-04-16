@@ -49,12 +49,18 @@ if (modelUrl) {
         newOption.value = `custom-${modelName}`;
         newOption.innerHTML = `Your Model ${response.status === 403 ? '🧊': '🔥'}`;
         showDescription(newOption)
-
-        curModel.appendChild(newOption);
-        newOption.click();
-        document.getElementsByClassName('loading')[0].style.display = 'none';
-        document.getElementsByClassName('contents')[0].style.display = 'flex';
-        document.getElementsByClassName('con_share')[0].style.display = 'flex';
+        if (response.status === undefined) {
+           return;
+        } else {
+            curModel.appendChild(newOption);
+            newOption.click();
+            document.getElementsByClassName(
+                'loading')[0].style.display = 'none';
+            document.getElementsByClassName(
+                'contents')[0].style.display = 'flex';
+            document.getElementsByClassName(
+                'con_share')[0].style.display = 'flex';
+        }
     })
 } else {
     const loading = document.getElementsByClassName('loading');
