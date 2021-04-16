@@ -19,20 +19,49 @@ if (text) {
     document.getElementById('editor').innerText = decodeURIComponent(text);
 } else {
     document.getElementById('editor').innerText =
-`Ainize is a launchpad for open-source projects.\n\
-Programming code is merely a text unless it is allocated with proper computing resources.\n\
-Ainize is about bringing Open-source projects to life by turning them into instantly executable services or APIs.\n`;
-
+`Type your word or sentence here and click Run autocomplete or Tab key\n\
+* You can fix beginning of the sentence by typing '&text=Your preferred word or sentence' at the end of TabTab web address\n`;
 }
-if (modelUrl) {
-    const modelName = /[^/]*$/.exec(modelUrl)[0];
-    const newOption = document.createElement('option');
-    newOption.selected = "selected";
-    newOption.value = `custom-${modelName}`;
-    newOption.innerHTML = modelName;
 
-    curModel.appendChild(newOption);
-    newOption.click();
+if (modelUrl) {
+    const url = new URL(modelUrl);
+    let branchName = url.hostname.match(/^[a-z0-9A-Z]+-[a-z0-9A-Z]+/);
+    branchName = branchName[0].replace('-','/');
+    const isDevApi = url.hostname.match(/dev.ainize.ai$/);
+    const isStagingApi = url.hostname.match(/staging.ainize.ai$/);
+    fetch('/status?' + new URLSearchParams({
+        branchName: branchName,
+        api: isDevApi ? "dev" : isStagingApi ? "staging" : "prod",
+    }))
+    .then(response => {
+        if ( response.status == 200 ){
+            return response;
+        }
+        else{
+            throw Error("gpt2-word error");
+        }
+    })
+    .then(response => response.json())
+    .then(response => {
+        const modelName = /[^/]*$/.exec(modelUrl)[0];
+        const newOption = document.createElement('option');
+        newOption.selected = "selected";
+        newOption.value = `custom-${modelName}`;
+        newOption.innerHTML = `Your Model ${response.status === 403 ? '🧊': '🔥'}`;
+
+        curModel.appendChild(newOption);
+        newOption.click();
+        document.getElementsByClassName('loading')[0].style.display = 'none';
+        document.getElementsByClassName('contents')[0].style.display = 'flex';
+        document.getElementsByClassName('con_share')[0].style.display = 'flex';
+    })
+} else {
+    const loading = document.getElementsByClassName('loading');
+    loading.length && (loading[0].style.display = 'none');
+    const contents = document.getElementsByClassName('contents');
+    contents.length && (contents[0].style.display = 'flex');
+    const con_share = document.getElementsByClassName('con_share');
+    con_share.length && (con_share[0].style.display = 'flex')
 }
 
 const KEY_CODE = {"TAB" : 9, "UP" : 38, "DOWN" : 40, "ENTER" : 13, "PASTE" : 86};

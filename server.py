@@ -4,7 +4,6 @@ import time
 import random
 import json
 import os
-
 from transformers import AutoTokenizer
 
 autoTokenizer = AutoTokenizer.from_pretrained("gpt2-large")
@@ -21,6 +20,52 @@ models = {
 }
 
 SERVER_URL = os.environ.get('GPT2_SERVER_URL')
+AINIZE_STATUS_URL = os.environ.get('AINIZE_STATUS_URL')
+API_DEV = os.environ.get('API_DEV')
+API_STAGING = os.environ.get('API_STAGING')
+API_PROD = os.environ.get('API_PROD')
+
+@app.route("/status", methods=['GET'])
+def ainize_status():
+    try:
+        branch_name = request.args.get('branchName')
+        branch_name = branch_name.replace('/', '%2F')
+        api = request.args.get('api')
+
+        api_server = ''
+        url = ''
+        if api == "dev":
+            api_server = API_DEV
+        elif api == "staging":
+            api_server = API_STAGING
+        else:
+            api_server = API_PROD
+        url = api_server + '/v2/repos/teachable-ainize/gpt2-train/branches/' + branch_name
+    except Exception:
+        print("Empty Text")
+        return Response("fail", status=400)
+    print(url)
+    response = requests.get(url, timeout=2)
+    if response.status_code == 200:
+        res = response.json()
+        deployId = res["currentlyTryingDeployID"]
+        print(deployId)
+        url = api_server + '/v2/commits/ainize-status'
+        print(deployId, url)
+        headers = {'Content-Type': 'application/json; charset=utf-8'}
+        data = {'deployId': deployId}
+        print(data)
+        result = requests.post(url, headers=headers, data=json.dumps(data))
+
+        if result.status_code == 200:
+            result = result.json()
+        else:
+            result = {'state': 'undefined'}
+        return result
+
+    else:
+        return jsonify({'fail': 'error'}), response.status_code
+
 
 @app.route("/url", methods=['POST'])
 def gpt2_url():
@@ -51,7 +96,6 @@ def gpt2_url():
             result[idx] = autoTokenizer.decode(
                 sampleOutput, skip_special_tokens=True)[len(context):]
         return result
-
     else:
         return jsonify({'fail': 'error'}), response.status_code
 
@@ -111,4 +155,3 @@ def healthCheck():
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=80, threaded=True)
-
