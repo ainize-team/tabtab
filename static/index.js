@@ -48,6 +48,7 @@ if (modelUrl) {
         newOption.selected = "selected";
         newOption.value = `custom-${modelName}`;
         newOption.innerHTML = `Your Model ${response.status === 403 ? '🧊': '🔥'}`;
+        showDescription(newOption)
 
         curModel.appendChild(newOption);
         newOption.click();
@@ -347,6 +348,14 @@ function showDescription(e){
     const description = document.getElementsByClassName("description")[0];
     const description_link = document.getElementById("description_link");
 
+    const isCold = e.innerHTML.indexOf('🧊') != -1;
+    const isHot = e.innerHTML.indexOf('🔥') != -1;
+    if (isCold) {
+        document.getElementsByClassName('cold')[0].style.display = 'block';
+    }
+    if (isHot) {
+        document.getElementsByClassName('hot')[0].style.display = 'block';
+    }
     switch (e.value){
         case "gpt2-large":
             description.innerHTML = "The GPT2-Large model generates the sentence.";
@@ -376,6 +385,12 @@ function showDescription(e){
             description.innerHTML = "This GPT2-trump model generates Donald trump’s tweets style sentence.";
             description_link.href = 'https://ainize.ai/gmlee329/gpt2_trump';
             description_link.innerText = 'https://ainize.ai/gmlee329/gpt2_trump';
+            break;
+
+        default:
+            description.innerHTML = "";
+            description_link.href = '';
+            description_link.innerText = '';
             break;
     }
 }
