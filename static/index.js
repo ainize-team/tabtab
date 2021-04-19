@@ -189,7 +189,10 @@ function complete(){
     loader.style.left = `${bounds.left}px`;
     loader.classList.remove('hide');
 
-    formData.append("context", quill.getText(0, cur));
+    formData.append("context", quill.getText(0, cur).replace(/\s+$/, ""));
+    curCursor = formData.get("context").length;
+    setCurrentCursorPosition();
+
     formData.append("length", length);
 
     let post_path = '';
