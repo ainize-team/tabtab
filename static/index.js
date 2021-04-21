@@ -191,7 +191,7 @@ function complete(){
 
     formData.append("context", quill.getText(0, cur).replace(/\s+$/, ""));
     curCursor = formData.get("context").length;
-    setCurrentCursorPosition();
+    // setCurrentCursorPosition();
 
     formData.append("length", length);
 
