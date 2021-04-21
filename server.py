@@ -16,7 +16,10 @@ models = {
     "gpt2-cover-letter": "cover-letter-gpt2",
     "gpt2-story": "gpt2_story",
     "gpt2-reddit": "gpt2_reddit",
-    "gpt2-trump": "gpt2_trump"
+    "gpt2-trump": "gpt2_trump",
+    "song": "https://train-9t12qy8htp6s1hai5sky-gpt2-train-teachable-ainize.endpoint.dev.ainize.ai/predictions/gpt-2-en-small-finetune",
+    "novel": "https://train-by90of3u6lqa9qgik70r-gpt2-train-teachable-ainize.endpoint.dev.ainize.ai/predictions/gpt-2-en-medium-finetune",
+    "research": "https://train-2mvr1pi2442cfeaeb5qm-gpt2-train-teachable-ainize.endpoint.dev.ainize.ai/predictions/gpt-2-en-small-finetune"
 }
 
 SERVER_URL = os.environ.get('GPT2_SERVER_URL')
@@ -76,6 +79,9 @@ def gpt2_url():
     except Exception:
         print("Empty Text")
         return Response("fail", status=400)
+
+    if not model_url.startswith('http'):
+        model_url = models[model_url]
 
     if length_form == 'short':
         times = random.randrange(2, 6)

@@ -199,6 +199,9 @@ function complete(){
     if (model.startsWith('custom-')) {
         post_path = 'url';
         formData.append("model", modelUrl);
+    } else if (model.startsWith('usecase-')) {
+        post_path = 'url';
+        formData.append("model", model.slice('usecase-'.length));
     } else {
         post_path = 'gpt2';
         formData.append("model", model);
@@ -282,8 +285,8 @@ $(document).on('mouseover', '.item', function(){
 
 $(document).on('click','.item',function(){
     if( TAB_ON == true ){
-        quill.insertText(curCursor, this.innerText.replace('↵', '\n'));
-        curCursor += this.innerText.length;
+        quill.insertText(curCursor, wrap_items[idx].innerText.replace('↵', '\n'));
+        curCursor += wrap_items[idx].innerText.length;
         // quill.insertText(curCursor, ' ');
         // curCursor ++;
         setCurrentCursorPosition();
