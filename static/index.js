@@ -86,7 +86,7 @@ quill.on('editor-change', function(eventName, ...args) {
         if (args[0]) {
             // after pasting text, move cursor to end of pasted text'
             if (args[1] && args[2] === 'silent') {
-                if(args[0].index > args[1].index) {
+                if (args[0].index > args[1].index) {
                     curCursor = args[0].index;
                     // setCurrentCursorPosition(curCursor);
                 }
@@ -97,8 +97,9 @@ quill.on('editor-change', function(eventName, ...args) {
 
             deactivateMenu();
         }
-    } else if (eventName === 'text-change') {
-        setCurrentCursorPosition();
+        // } else if (eventName === 'text-change') {
+        //     setCurrentCursorPosition();
+        // }
     }
 });
 const loader = document.querySelector('.loader');
