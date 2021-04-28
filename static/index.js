@@ -97,9 +97,10 @@ quill.on('editor-change', function(eventName, ...args) {
 
             deactivateMenu();
         }
-    } else if (eventName === 'text-change') {
-        setCurrentCursorPosition();
     }
+    // else if (eventName === 'text-change') {
+    //     setCurrentCursorPosition();
+    // }
 });
 const loader = document.querySelector('.loader');
 quill.container.appendChild(loader);
