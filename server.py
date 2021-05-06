@@ -89,7 +89,6 @@ def gpt2_url():
         encoded_text = eng_tokenizer.encode(context)
         data = {"text": encoded_text, "num_samples": 5, "length": length}
 
-    # print('model_url is', model_url)
     response = requests.post(model_url, headers=headers, data=json.dumps(data))
     if response.status_code == 200:
         result = dict()
@@ -130,8 +129,6 @@ def gpt2():
     elif length == 'long':
         data = {"text": context, "num_samples": 5, "length": 20}
 
-    print('Context', context)
-    print('Url', url)
     count = 0
     while True:
         response = requests.post(url, headers=headers, data=json.dumps(data))
