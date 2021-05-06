@@ -99,7 +99,7 @@ def gpt2_url():
 
         for idx, sampleOutput in enumerate(res):
             if is_kor: # 한국어 모델 :: text 이기 때문에 별도의 decode 과정 없음
-                result[idx] = sampleOutput
+                result[idx] = sampleOutput[len(context):]
             else:
                 result[idx] = eng_tokenizer.decode(
                     sampleOutput, skip_special_tokens=True)[len(context):]
