@@ -17,9 +17,9 @@ models = {
     "gpt2-story": "gpt2_story",
     "gpt2-reddit": "gpt2_reddit",
     "gpt2-trump": "gpt2_trump",
-    "song": "https://train-9t12qy8htp6s1hai5sky-gpt2-train-teachable-ainize.endpoint.dev.ainize.ai/predictions/gpt-2-en-small-finetune",
-    "novel": "https://train-by90of3u6lqa9qgik70r-gpt2-train-teachable-ainize.endpoint.dev.ainize.ai/predictions/gpt-2-en-medium-finetune",
-    "research": "https://train-2mvr1pi2442cfeaeb5qm-gpt2-train-teachable-ainize.endpoint.dev.ainize.ai/predictions/gpt-2-en-small-finetune"
+    "song": "https://train-vpgnvfx5sxws3mdttrpm-gpt2-train-teachable-ainize.endpoint.ainize.ai/predictions/gpt-2-en-small-finetune",
+    "novel": "https://train-koew8er2jy5378wfkpsd-gpt2-train-teachable-ainize.endpoint.ainize.ai/predictions/gpt-2-en-medium-finetune",
+    "research": "https://train-sl6ooaa78asytk206r9j-gpt2-train-teachable-ainize.endpoint.ainize.ai/predictions/gpt-2-en-small-finetune"
 }
 
 SERVER_URL = os.environ.get('GPT2_SERVER_URL')
