@@ -4,9 +4,9 @@ import time
 import random
 import json
 import os
-from transformers import PreTrainedTokenizerFast
+from transformers import AutoTokenizer
 
-eng_tokenizer = PreTrainedTokenizerFast.from_pretrained("gpt2-large")
+eng_tokenizer = AutoTokenizer.from_pretrained("gpt2-large")
 
 # Server & Handling Setting
 app = Flask(__name__, static_url_path='/static')
@@ -81,28 +81,26 @@ def gpt2_url():
         length = 20
 
     headers = {'Content-Type': 'application/json; charset=utf-8'}
-    is_kor = False # kogpt 관련 플래그
-    if 'gpt-2-ko-small-finetune' in model_url: # 만약 model_url 에 kogpt 관련 내용이 있으면 raw text 모드로 동작 하도록 수정
-        data = {"text": context, "num_samples": 5, "length": length}
-        is_kor = True
-    else:
+    is_vector = False
+    if "gpt-2-en-large-finetune" in model_url \
+            or "gpt-2-en-medium-finetune" in model_url \
+            or "gpt-2-en-small-finetune" in model_url:
         encoded_text = eng_tokenizer.encode(context)
         data = {"text": encoded_text, "num_samples": 5, "length": length}
+        is_vector = True
+    else:
+        data = {"text": context, "num_samples": 5, "length": length}
 
     response = requests.post(model_url, headers=headers, data=json.dumps(data))
     if response.status_code == 200:
         result = dict()
-        if is_kor: # 한국어 모델
-            res = eval(response.text)
-        else:
-            res = response.json()
+        res = response.json()
 
         for idx, sampleOutput in enumerate(res):
-            if is_kor: # 한국어 모델 :: text 이기 때문에 별도의 decode 과정 없음
-                result[idx] = sampleOutput[len(context):]
+            if is_vector:
+                result[idx] = eng_tokenizer.decode(sampleOutput, skip_special_tokens=True)[len(context):]
             else:
-                result[idx] = eng_tokenizer.decode(
-                    sampleOutput, skip_special_tokens=True)[len(context):]
+                result[idx] = sampleOutput[len(context):]
         return result
     else:
         return jsonify({'fail': 'error'}), response.status_code
